@@ -45,6 +45,8 @@ body { font-family: "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; b
 .stat-card.all .num { color:#bf360c; }
 .stat-card.ep { background:linear-gradient(135deg,#fff9e6,#fff3cd); }
 .stat-card.ep .num { color:#e65100; }
+.stat-card.rank { background:linear-gradient(135deg,#f3e5f5,#e1bee7); }
+.stat-card.rank .num { color:#7b1fa2; }
 
 .container { max-width:1300px; margin:0 auto; padding:24px; }
 
@@ -189,6 +191,32 @@ body { font-family: "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; b
 .ep-modal-chars .clabel { font-size:12px; color:var(--text-light); font-weight:700; margin-bottom:8px; letter-spacing:1px; }
 .ep-modal-chars .ctags { display:flex; gap:8px; flex-wrap:wrap; }
 .ep-modal-chars .ctag { padding:4px 12px; border-radius:12px; font-size:13px; background:var(--card-bg); border:1px solid var(--border); color:var(--text); }
+/* Ranking */
+.rank-section-title { font-size:13px; font-weight:600; color:var(--text-light); margin:20px 0 10px 4px; }
+.rank-section-title::before { content:"▸ "; }
+.rank-top-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; margin-bottom:10px; }
+.rank-top-card { background:var(--card-bg); border-radius:12px; box-shadow:var(--shadow); display:flex; gap:12px; padding:14px; cursor:pointer; transition:all .2s; position:relative; }
+.rank-top-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg); }
+.rank-top-card .rank-avatar { width:80px; height:80px; border-radius:10px; flex-shrink:0; overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:36px; color:#fff; font-weight:900; }
+.rank-top-card .rank-avatar img { width:100%; height:100%; object-fit:contain; }
+.rank-top-card .rank-badge { position:absolute; top:-6px; left:-6px; width:28px; height:28px; border-radius:50%; font-size:12px; font-weight:800; color:#fff; display:flex; align-items:center; justify-content:center; }
+.rank-badge.r1 { background:linear-gradient(135deg,#f12711,#f5af19); }
+.rank-badge.r2 { background:linear-gradient(135deg,#9e9e9e,#bdbdbd); }
+.rank-badge.r3 { background:linear-gradient(135deg,#a1887f,#8d6e63); }
+.rank-badge.rg { background:linear-gradient(135deg,#5c6bc0,#7e57c2); }
+.rank-top-card .rank-info { flex:1; min-width:0; }
+.rank-top-card .rank-name { font-size:15px; font-weight:700; margin-bottom:2px; }
+.rank-top-card .rank-identity { font-size:11px; color:var(--text-light); margin-bottom:4px; }
+.rank-top-card .rank-score { font-size:22px; font-weight:800; color:var(--red); margin-bottom:2px; }
+.rank-top-card .rank-reason { font-size:10px; color:var(--gold); line-height:1.4; }
+.rank-mid-list { display:flex; flex-direction:column; gap:6px; }
+.rank-mid-row { display:flex; align-items:center; gap:12px; padding:10px 14px; background:var(--card-bg); border-radius:10px; box-shadow:0 1px 4px rgba(0,0,0,.04); cursor:pointer; transition:all .15s; }
+.rank-mid-row:hover { background:var(--bg); transform:translateX(4px); }
+.rank-mid-row .rm-rank { width:26px; height:26px; border-radius:50%; font-size:11px; font-weight:800; color:#fff; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.rank-mid-row .rm-thumb { width:40px; height:40px; border-radius:8px; flex-shrink:0; overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:18px; color:#fff; font-weight:800; }
+.rank-mid-row .rm-thumb img { width:100%; height:100%; object-fit:contain; }
+.rank-mid-row .rm-name { font-size:14px; font-weight:600; flex:1; }
+.rank-mid-row .rm-score { font-size:13px; font-weight:700; color:var(--red); }
 @media (max-width:768px) {
   .ep-card { flex-direction:column; gap:10px; padding:16px; }
   .ep-modal-hero { aspect-ratio:3/2; }
@@ -476,6 +504,7 @@ const categories = [
   {id:"mortal", label:"凡人体系"},
   {id:"item", label:"法宝/其他"},
   {id:"episodes", label:"分集剧情"},
+  {id:"ranking", label:"角色排行"},
 ];
 const impLabels = {main:"主角", support:"重要配角", minor:"次要角色", extra:"龙套"};
 const impClasses = {main:"main", support:"support", minor:"minor", extra:"extra"};
@@ -483,6 +512,84 @@ const impTags = {main:"tag-main", support:"tag-support", minor:"tag-minor", extr
 const catColors = {
   team:{icon:"🏆"}, immortal:{icon:"☁️"}, demon:{icon:"👹"}, mortal:{icon:"👤"}, item:{icon:"💎"},
 };
+
+function populateRankings() {
+  const map = {};
+  characters.forEach(c => { map[c.name] = c; });
+  const list = [
+    {score:100,reason:"童年金典·齐天大圣·表情包之王·家喻户晓",highlight:"火眼金睛·七十二变"},
+    {score:97,reason:"国民开心果·好吃懒做·背媳妇·表情包巨头",highlight:"高老庄·女儿国"},
+    {score:95,reason:"爱情金名场面·悄悄问圣僧·最美角色",highlight:"一首女儿情传唱至今"},
+    {score:93,reason:"童年女神·法力无边·救苦救难",highlight:"杨柳甘露·收红孩儿"},
+    {score:92,reason:"凡胎肉体西天路·心中有大爱",highlight:"唯一动了情的唐僧"},
+    {score:90,reason:"经典妖怪·三打成名·童年阴影",highlight:"三变·悟空被逐名场面"},
+    {score:88,reason:"五指山名场面·大智慧·金句频频",highlight:"悟空翻不出五指山"},
+    {score:87,reason:"你是猴子请来的救兵吗·经典假观音",highlight:"三昧真火·金箍收服"},
+    {score:85,reason:"老实人·台词少传播广·沙师弟",highlight:"大师兄说得对"},
+    {score:84,reason:"西游记最强家庭·大战群仙",highlight:"火焰山三调芭蕉扇"},
+    {score:83,reason:"唯一能跟悟空五五开·高颜值",highlight:"七十二变斗法·天眼"},
+    {score:82,reason:"天庭CEO·被悟空吓得钻桌子",highlight:"蟠桃会·请如来救驾"},
+    {score:81,reason:"炼丹达人·八卦炉·火眼金睛缔造者",highlight:"八卦炉里炼悟空"},
+    {score:80,reason:"善良又执着·三调芭蕉扇",highlight:"火焰山·芭蕉扇"},
+    {score:79,reason:"童年另一大招·真假孙悟空",highlight:"谁也分不清真假"},
+    {score:79,reason:"三太子·风火轮·名场面多",highlight:"大闹天宫打头阵"},
+    {score:80,reason:"敢爱敢恨·倒马毒桩",highlight:"掳走唐僧要成亲"},
+    {score:78,reason:"龙变白马·沉默守护",highlight:"西行路上最稳的座驾"},
+    {score:77,reason:"神秘师父·给悟空起名的人",highlight:"斜月三星洞·传道"},
+    {score:76,reason:"我叫你一声你敢答应吗·五件法宝",highlight:"紫金红葫芦·骗装银角"},
+    {score:75,reason:"移山倒海·银角变道士骗唐僧",highlight:"莲花洞智斗"},
+    {score:74,reason:"童年香艳记忆·濯垢泉",highlight:"七个蜘蛛精·多目怪"},
+    {score:73,reason:"广寒宫下来的·最美妖怪之一",highlight:"假冒公主招亲"},
+    {score:72,reason:"蟠桃会主持人·瑶池",highlight:"蟠桃会·与玉帝并列"},
+    {score:72,reason:"人参果名场面·地仙之祖",highlight:"推倒人参果树·观音医树"},
+    {score:71,reason:"狮驼国三魔王之首·法力高强",highlight:"狮驼岭·如来舅舅"},
+    {score:69,reason:"老好人·传旨专业户",highlight:"招安悟空·弼马温"},
+    {score:68,reason:"宿命悲情·百花羞公主",highlight:"宝象国·奎木狼"},
+    {score:67,reason:"布袋和尚·笑口常开",highlight:"小雷音寺·人种袋"},
+    {score:66,reason:"偷袈裟·贪财憨熊",highlight:"黑风山·观音院"},
+    {score:65,reason:"心猿归正·设计金箍",highlight:"老奶奶送悟空紧箍咒"},
+    {score:64,reason:"八戒前尘·高老庄",highlight:"绣楼变翠兰·收八戒"},
+    {score:63,reason:"想成仙的凡间国王·三清观闹剧",highlight:"斗法降三怪·孙悟空做法"},
+    {score:62,reason:"老鼠精逼婚·无底洞",highlight:"偷香烛·灵山百鼠"},
+    {score:61,reason:"阴阳二气瓶·大鹏作恶",highlight:"狮驼国灭国·一根毫毛"},
+    {score:60,reason:"真龙天子变成水鬼·悬疑案",highlight:"鬼魂托梦·老君还魂丹"},
+    {score:59,reason:"三昧神风·吹瞎悟空眼睛",highlight:"灵吉菩萨定风珠"},
+    {score:58,reason:"百花羞的爱人·奎木狼下凡",highlight:"波月洞·宝象国"},
+    {score:57,reason:"大圣闹天宫·巨力扛旗",highlight:"被悟空打得哭回去"},
+    {score:56,reason:"通天河·吃童男童女",highlight:"观音养的金鱼·竹篮收妖"},
+    {score:55,reason:"美艳又法力高深·四圣试禅心",highlight:"试探取经诚心·八戒被捆"},
+    {score:54,reason:"你挑着担我牵着马·歌词所指",highlight:"通天河老龟相助·晒经书"},
+    {score:53,reason:"孔雀公主·大鹏逼婚",highlight:"狮驼岭最小清新的妖怪"},
+    {score:52,reason:"天庭战神·三只眼·哮天犬",highlight:"围剿花果山·互斗七十三变"},
+    {score:51,reason:"道家顶级·一气化三清",highlight:"金刚琢打悟空·青牛精"},
+    {score:50,reason:"对鱼弹琴·悟空请的救兵",highlight:"通天河·灵感大王"},
+    {score:49,reason:"赐金蝉子·不听话就念紧箍咒",highlight:"金蝉子·取经策划者"},
+    {score:48,reason:"演得好不如哭得好·悟空的朋友",highlight:"哭诉被悟空欺负"},
+  ];
+  const names = [
+    "孙悟空","猪八戒","女儿国国王","观音菩萨","唐僧","白骨精","如来佛祖","红孩儿",
+    "沙僧","牛魔王","二郎神","玉皇大帝","太上老君","铁扇公主","六耳猕猴","哪吒",
+    "蝎子精","白龙马","菩提祖师","金角大王","银角大王","蜘蛛精七姐妹","玉兔精",
+    "王母娘娘","镇元大仙","大鹏鸟","太白金星","黄袍怪","弥勒佛","黑熊精",
+    "黎山老母","高翠兰","车迟国国王","老鼠精","青狮精","乌鸡国国王","黄风怪",
+    "百花羞公主","巨灵神","灵感大王","观音化身母女","通天河老龟","孔雀公主",
+    "二郎神","太上老君","观音菩萨","如来佛祖","托塔李天王"
+  ];
+  const ranked = [];
+  const seen = new Set();
+  for (let i = 0; i < names.length; i++) {
+    const n = names[i];
+    if (seen.has(n)) continue;
+    seen.add(n);
+    const c = map[n];
+    if (!c) continue;
+    ranked.push({...c, pop:list[i].score, popReason:list[i].reason, popHighlight:list[i].highlight});
+  }
+  ranked.sort((a,b) => b.pop - a.pop);
+  return ranked;
+}
+
+const rankedCharacters = populateRankings();
 
 let activeCat = "all", activeImp = "all";
 
@@ -505,7 +612,8 @@ function init() {
     <div class="stat-card demon" data-cat="demon" title="点击查看妖怪精怪"><div class="num">${counts.demon}</div><div class="label">👹 妖怪精怪</div></div>
     <div class="stat-card mortal" data-cat="mortal" title="点击查看凡人体系"><div class="num">${counts.mortal}</div><div class="label">👤 凡人体系</div></div>
     <div class="stat-card item" data-cat="item" title="点击查看法宝/其他"><div class="num">${counts.item}</div><div class="label">💎 法宝/其他</div></div>
-    <div class="stat-card ep" data-cat="episodes" title="点击查看分集剧情"><div class="num">25</div><div class="label">🎬 分集剧情</div></div>`;
+    <div class="stat-card ep" data-cat="episodes" title="点击查看分集剧情"><div class="num">25</div><div class="label">🎬 分集剧情</div></div>
+    <div class="stat-card rank" data-cat="ranking" title="点击查看角色排行"><div class="num">50</div><div class="label">🏅 角色排行</div></div>`;
   document.getElementById("totalCount").textContent = total;
 
   document.querySelectorAll("#importanceFilter .filter-btn").forEach(btn => {
@@ -526,9 +634,9 @@ function switchTab(cat) {
   activeCat = cat;
   const filterGroup = document.getElementById("importanceFilter");
   const searchInput = document.getElementById("search");
-  if (activeCat === "episodes") {
+  if (activeCat === "episodes" || activeCat === "ranking") {
     filterGroup.style.display = "none";
-    searchInput.placeholder = "搜索剧情标题或集数...";
+    searchInput.placeholder = activeCat === "ranking" ? "搜排名角色..." : "搜索剧情标题或集数...";
   } else {
     filterGroup.style.display = "";
     searchInput.placeholder = "搜索角色名称或身份...";
@@ -625,6 +733,94 @@ function renderAll() {
     return;
   }
 
+  // Ranking mode
+  if (activeCat === "ranking") {
+    let filtered = rankedCharacters;
+    if (query) {
+      filtered = rankedCharacters.filter(c =>
+        c.name.toLowerCase().includes(query) ||
+        c.identity.toLowerCase().includes(query) ||
+        (c.cat && c.cat.toLowerCase().includes(query))
+      );
+    }
+    document.getElementById("resultInfo").innerHTML = `共 <strong>${filtered.length}</strong> 位上榜角色`;
+
+    const top10 = filtered.slice(0,10);
+    const mid20 = filtered.slice(10,30);
+    const rest20 = filtered.slice(30,50);
+
+    let html = '';
+
+    // Top 10 big cards
+    html += '<div class="rank-section-title">🔥 超人气 TOP 10</div>';
+    html += '<div class="rank-top-grid">';
+    top10.forEach((c,i) => {
+      const idx = rankedCharacters.indexOf(c) + 1;
+      const rb = idx===1?'r1':idx===2?'r2':idx===3?'r3':'rg';
+      const imgHtml = c.img
+        ? `<img src="${c.img}" alt="${c.name}" loading="lazy">`
+        : `<span>${c.name.charAt(0)}</span>`;
+      const catEmoji = c.cat==='team'?'🏆':c.cat==='immortal'?'☁️':c.cat==='demon'?'👹':c.cat==='mortal'?'👤':'💎';
+      html += `
+        <div class="rank-top-card" onclick="openModal(characters.find(ch=>ch.name==='${c.name.replace(/'/g,"\\'")}'))">
+          <div class="rank-avatar ${c.cat}">${imgHtml}</div>
+          <div class="rank-badge ${rb}">${idx}</div>
+          <div class="rank-info">
+            <div class="rank-name">${c.name}</div>
+            <div class="rank-identity">${catEmoji} ${c.identity}</div>
+            <div class="rank-score">${c.pop}</div>
+            <div class="rank-reason">${c.popReason}</div>
+          </div>
+        </div>`;
+    });
+    html += '</div>';
+
+    // Mid 11-30
+    if (mid20.length > 0) {
+      html += '<div class="rank-section-title">⭐ 高人气 11-30</div><div class="rank-mid-list">';
+      mid20.forEach(c => {
+        const idx = rankedCharacters.indexOf(c) + 1;
+        const rb = idx<=3?'r1':idx<=10?'rg':'';
+        const imgHtml = c.img
+          ? `<img src="${c.img}" alt="${c.name}" loading="lazy">`
+          : `<span>${c.name.charAt(0)}</span>`;
+        html += `
+          <div class="rank-mid-row" onclick="openModal(characters.find(ch=>ch.name==='${c.name.replace(/'/g,"\\'")}'))">
+            <div class="rm-rank ${rb}">${idx}</div>
+            <div class="rm-thumb ${c.cat}">${imgHtml}</div>
+            <div class="rm-name">${c.name} <span style="font-size:11px;color:var(--text-light);font-weight:400;">${c.identity}</span></div>
+            <div class="rm-score">${c.pop}</div>
+          </div>`;
+      });
+      html += '</div>';
+    }
+
+    // Rest 31-50
+    if (rest20.length > 0) {
+      html += '<div class="rank-section-title">👍 经典 31-50</div><div class="rank-mid-list">';
+      rest20.forEach(c => {
+        const idx = rankedCharacters.indexOf(c) + 1;
+        const imgHtml = c.img
+          ? `<img src="${c.img}" alt="${c.name}" loading="lazy">`
+          : `<span>${c.name.charAt(0)}</span>`;
+        html += `
+          <div class="rank-mid-row" onclick="openModal(characters.find(ch=>ch.name==='${c.name.replace(/'/g,"\\'")}'))">
+            <div class="rm-rank" style="background:#78909c;">${idx}</div>
+            <div class="rm-thumb ${c.cat}">${imgHtml}</div>
+            <div class="rm-name">${c.name} <span style="font-size:11px;color:var(--text-light);font-weight:400;">${c.identity}</span></div>
+            <div class="rm-score">${c.pop}</div>
+          </div>`;
+      });
+      html += '</div>';
+    }
+
+    if (filtered.length === 0) {
+      html = '<div class="no-result"><div class="big">🏅</div><p>没有匹配的角色，试试换个关键词？</p></div>';
+    }
+    document.getElementById("tabContents").innerHTML = html;
+    return;
+  }
+
   // Character mode
   let filtered = characters;
   if (activeCat !== "all") filtered = filtered.filter(c => c.cat === activeCat);
@@ -636,7 +832,7 @@ function renderAll() {
   }
   document.getElementById("resultInfo").innerHTML = `找到 <strong>${filtered.length}</strong> 个角色`;
 
-  const catOrder = activeCat === "all" ? categories.filter(c => c.id !== "all" && c.id !== "episodes") : categories.filter(c => c.id === activeCat);
+  const catOrder = activeCat === "all" ? categories.filter(c => c.id !== "all" && c.id !== "episodes" && c.id !== "ranking") : categories.filter(c => c.id === activeCat);
   let html = "";
   catOrder.forEach(cat => {
     const catChars = filtered.filter(c => c.cat === cat.id);
