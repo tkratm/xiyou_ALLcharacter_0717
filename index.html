@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>86版《西游记》角色全清单</title>
+<title>86版《西游记》角色全清单 & 25集分集剧情</title>
 <style>
 :root {
   --red: #b71c1c; --red-light: #e53935;
@@ -140,6 +140,57 @@ body { font-family: "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; b
 @media (max-width:480px) {
   .tabs { gap:0; } .tab { padding:10px 14px; font-size:13px; }
 }
+
+/* ===== Episode Styles ===== */
+.ep-header-bar { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+.ep-header-bar .sort-info { font-size:13px; color:var(--text-light); opacity:.8; }
+.ep-cards { display:flex; flex-direction:column; gap:14px; }
+.ep-card { background:var(--card-bg); border-radius:12px; box-shadow:var(--shadow); display:flex; gap:16px; padding:20px; transition:all .2s; cursor:pointer; position:relative; overflow:hidden; }
+.ep-card:hover { transform:translateY(-2px); box-shadow:var(--shadow-lg); }
+.ep-rank { flex-shrink:0; width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:900; color:#fff; }
+.ep-rank.fire { background:linear-gradient(135deg,#f12711,#f5af19); }
+.ep-rank.gold { background:linear-gradient(135deg,#e53935,#ff6f00); }
+.ep-rank.silver { background:linear-gradient(135deg,#e67e22,#f39c12); }
+.ep-rank.bronze { background:linear-gradient(135deg,#5c6bc0,#7e57c2); }
+.ep-rank.normal { background:linear-gradient(135deg,#90a4ae,#78909c); }
+.ep-info { flex:1; min-width:0; }
+.ep-title-row { display:flex; align-items:center; gap:10px; margin-bottom:6px; flex-wrap:wrap; }
+.ep-title-row .ep-num { font-size:11px; background:var(--bg); padding:2px 10px; border-radius:10px; color:var(--text-light); white-space:nowrap; }
+.ep-title-row .ep-title { font-size:18px; font-weight:700; }
+.ep-title-row .hot-badge { font-size:10px; padding:2px 8px; border-radius:10px; font-weight:600; white-space:nowrap; }
+.hot-badge.super { background:#fff3e0; color:#e65100; }
+.hot-badge.star { background:#fff8e1; color:#f57f17; }
+.hot-badge.good { background:#e8f5e9; color:#2e7d32; }
+.ep-summary { font-size:13px; color:var(--text-light); line-height:1.7; margin-bottom:8px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.ep-chars { display:flex; gap:5px; flex-wrap:wrap; }
+.ep-char-tag { font-size:11px; padding:2px 8px; border-radius:10px; background:var(--bg); color:var(--text-light); }
+.ep-highlight { font-size:11px; color:var(--red); margin-top:6px; opacity:.85; }
+.ep-highlight::before { content:"💡 "; }
+/* Episode Modal */
+.ep-modal-hero { width:100%; aspect-ratio:2/1; max-height:40vh; display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.ep-modal-hero .ep-modal-rank { font-size:56px; font-weight:900; opacity:.25; position:absolute; right:20px; top:10px; line-height:1; }
+.ep-modal-hero .ep-modal-num { font-size:14px; opacity:.85; margin-bottom:4px; }
+.ep-modal-hero .ep-modal-title { font-size:32px; font-weight:800; letter-spacing:2px; }
+.ep-modal-hero.fire { background:linear-gradient(135deg,#f12711,#f5af19); color:#fff; }
+.ep-modal-hero.gold { background:linear-gradient(135deg,#b71c1c,#e53935); color:#fff; }
+.ep-modal-hero.silver { background:linear-gradient(135deg,#e67e22,#d84315); color:#fff; }
+.ep-modal-hero.bronze { background:linear-gradient(135deg,#3949ab,#5c6bc0); color:#fff; }
+.ep-modal-hero.normal { background:linear-gradient(135deg,#546e7a,#78909c); color:#fff; }
+.ep-modal-body { padding:24px; }
+.ep-modal-body h2 { font-size:24px; margin-bottom:12px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.ep-modal-summary { font-size:15px; line-height:1.9; color:var(--text); margin-bottom:20px; }
+.ep-modal-quotes { background:var(--bg); border-radius:10px; padding:16px 20px; margin-bottom:20px; }
+.ep-modal-quotes .qlabel { font-size:12px; color:var(--gold); font-weight:700; margin-bottom:8px; letter-spacing:1px; }
+.ep-modal-quotes .quote { font-size:14px; color:var(--text); line-height:1.8; margin-bottom:6px; padding-left:12px; border-left:3px solid var(--gold); }
+.ep-modal-quotes .quote:last-child { margin-bottom:0; }
+.ep-modal-chars .clabel { font-size:12px; color:var(--text-light); font-weight:700; margin-bottom:8px; letter-spacing:1px; }
+.ep-modal-chars .ctags { display:flex; gap:8px; flex-wrap:wrap; }
+.ep-modal-chars .ctag { padding:4px 12px; border-radius:12px; font-size:13px; background:var(--card-bg); border:1px solid var(--border); color:var(--text); }
+@media (max-width:768px) {
+  .ep-card { flex-direction:column; gap:10px; padding:16px; }
+  .ep-modal-hero { aspect-ratio:3/2; }
+  .ep-modal-hero .ep-modal-title { font-size:24px; }
+}
 </style>
 </head>
 <body>
@@ -147,7 +198,7 @@ body { font-family: "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; b
 <div class="hero">
   <div class="cloud left">☁</div><div class="cloud right">☁</div>
   <h1>86版《西游记》角色全清单</h1>
-  <p class="sub">央视版 · 神仙 · 妖怪 · 凡人 · 三大体系全收录</p>
+  <p class="sub">央视版 · 188个角色 · 25集分集剧情 · 知己知彼百战不殆</p>
 </div>
 
 <div class="stats" id="stats"></div>
@@ -156,7 +207,7 @@ body { font-family: "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; b
   <div class="toolbar">
     <div class="search-box">
       <span class="icon">🔍</span>
-      <input type="text" id="search" placeholder="搜索角色名称或身份..." oninput="renderAll()">
+      <input type="text" id="search" placeholder="搜索角色或剧情集数..." oninput="renderAll()">
     </div>
     <div class="filter-group" id="importanceFilter">
       <button class="filter-btn active" data-filter="all">全部</button>
@@ -172,7 +223,7 @@ body { font-family: "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; b
 </div>
 
 <div class="footer">
-  基于央视86版《西游记》25集整理 · 含续集标注 · 共收录 <strong id="totalCount">188</strong> 个角色<br>
+  基于央视86版《西游记》25集整理 · 含续集标注 · 共收录 <strong id="totalCount">188</strong> 个角色 · <strong>25</strong> 集分集剧情<br>
   <span style="opacity:.6">弼马温 🐒 整理 · 活阎王出品</span>
 </div>
 
@@ -386,6 +437,35 @@ const characters = [
   {name:"石猴出世仙石", aka:"", identity:"花果山灵石，孙悟空之源", cat:"item", sub:"特殊", imp:"extra", img:"char_imgs/shihouchushixianshi.webp"},
 ];
 
+// ===== 25集分集剧情（按观众喜爱度排名）=====
+const episodes = [
+  {rank:1,ep:16,title:"趣经女儿国",summary:"师徒来到西梁女国——举国皆女子的神秘国度。女王对唐僧一见倾心，愿以江山为聘、万金之躯相许。唐僧面临取经路上最特殊的考验：不是妖怪，而是一份炽热真挚的感情。蝎子精趁乱将唐僧掳入琵琶洞，悟空八戒不敌其倒马毒桩，请来昴日星官方才降服。唐僧辞别含泪的女王，策马西去——这是全剧唯一一次唐僧动了真情，也是86版公认艺术成就最高的一集。",quotes:["\"你说四大皆空，却紧闭双眼。要是你睁开眼睛看看我，我不信你两眼空空。\"","\"来世若有缘分……\" \"我只想今生，不想来世。\"","\"悄悄问圣僧，女儿美不美？\""],chars:["唐僧","孙悟空","猪八戒","沙僧","女儿国国王","蝎子精","昴日星官"],highlight:"唐僧唯一动真情 · 86版公认最佳单集 · 杨洁导演最爱"},
+  {rank:2,ep:10,title:"三打白骨精",summary:"白虎岭白骨精为吃唐僧肉长生不老，先后变作村姑、老妇和老翁迷惑师徒。孙悟空火眼金睛识破妖术，三挥金箍棒打杀\"凡人\"。唐僧肉眼凡胎，认定悟空滥杀无辜，念紧箍咒痛责，最终写下贬书将其逐回花果山。悟空含泪叩别师父，一步三回头——这是全剧最令人心碎的一集，无数观众的童年\"泪点\"。",quotes:["\"师父——！师父——！\"","\"你走吧，我不要你这个徒弟了！\"","\"俺老孙去也！\""],chars:["唐僧","孙悟空","猪八戒","沙僧","白骨精"],highlight:"全剧最大泪点 · 悟空被逐名场面 · 一代人的童年阴影"},
+  {rank:3,ep:3,title:"大圣闹天宫",summary:"悟空先封弼马温，得知是末等小官大怒反下天庭，自封齐天大圣。玉帝派托塔李天王、哪吒率天兵围剿花果山，被一一击败。二郎神率梅山六兄弟来战，双方七十二变斗法不分胜负，太上老君掷金刚琢偷袭，悟空被擒。斩妖台刀砍斧劈伤不得他半分，老君投入八卦炉炼了七七四十九天，反炼出火眼金睛！悟空蹬翻八卦炉，一路打上凌霄宝殿。",quotes:["\"皇帝轮流做，明年到我家！\"","\"吃俺老孙一棒！\"","\"俺老孙来也！\""],chars:["孙悟空","玉皇大帝","太上老君","哪吒","二郎神","巨灵神","四大天王","太白金星"],highlight:"全剧动作巅峰 · 八卦炉炼出火眼金睛 · 大闹天宫名场面"},
+  {rank:4,ep:1,title:"猴王初问世",summary:"东胜神洲傲来国花果山顶一块仙石迸裂，产一石猴。石猴勇探水帘洞，被群猴拥为美猴王。为求长生不老，漂洋过海寻仙访道，终在灵台方寸山斜月三星洞拜菩提祖师为师，得名\"孙悟空\"，学成七十二变与筋斗云。回山后闯东海龙宫夺如意金箍棒，大闹幽冥地府勾销猴类生死簿。天庭震动，龙王与阎王联名上表——一场天地大戏就此拉开。",quotes:["\"我无性。人若骂我，我也不恼；若打我，我也不嗔。\"","\"求仙问卜，不如自己做主。\""],chars:["孙悟空","菩提祖师","东海龙王","十殿阎王","混世魔王","独角鬼王"],highlight:"石猴出世 · 拜师学艺 · 龙宫夺宝 · 传奇开篇"},
+  {rank:5,ep:17,title:"三调芭蕉扇",summary:"八百里火焰山挡住西行路，唯铁扇公主的芭蕉扇能灭此火。一借：悟空被一扇扇飞五万余里；灵吉菩萨赠定风丹。二借：变作小虫钻入铁扇公主腹中逼出扇子，却是把假扇，火越扇越大。三借：变作牛魔王骗得真扇，不料真牛魔王变作猪八戒骗回。最终请天兵天将围剿，哪吒降服牛魔王，铁扇公主交出宝扇，连扇四十九扇，火焰山大火熄灭。",quotes:["\"嫂嫂，借扇子一用！\"","\"牛大哥，你我也算老相识了。\""],chars:["孙悟空","猪八戒","牛魔王","铁扇公主","玉面狐狸","哪吒","托塔李天王","灵吉菩萨"],highlight:"牛魔王大战群仙 · 三借三骗斗智斗勇 · 场面宏大"},
+  {rank:6,ep:14,title:"大战红孩儿",summary:"号山枯松涧火云洞圣婴大王红孩儿——牛魔王与铁扇公主之子——用三昧真火挡住取经路。他变作吊在树上的孩童诱骗唐僧，一阵狂风卷走。悟空上门讨人，被三昧真火烧得焦头烂额，险些丧命。八戒去请观音，反被红孩儿变成假观音骗入洞中。悟空最终请来观音菩萨，用天罡刀阵与金箍收服红孩儿，令其做了善财童子。",quotes:["\"你是猴子请来的救兵吗？\"","\"你孙外公在此！\""],chars:["孙悟空","猪八戒","唐僧","红孩儿","观音菩萨"],highlight:"你是猴子请来的救兵吗 · 三昧真火名场面 · 年度最萌反派"},
+  {rank:7,ep:15,title:"斗法降三怪",summary:"车迟国虎力、鹿力、羊力三位国师——实为妖道——蛊惑国王灭佛崇道，奴役全国僧人。悟空夜闹三清观大戏妖道，次日与三位国师展开惊天赌斗：祈雨、云梯显圣、隔板猜枚、砍头再生、剖腹挖心、滚油锅。六场斗法层层升级精彩绝伦，三位妖道一一现出原形毙命，车迟国重归正途。全剧最欢乐的一集。",quotes:["\"贫僧从东土大唐而来，前往西天拜佛求经。\"","\"你那个是小乘教法，度不得亡者超升。\""],chars:["孙悟空","猪八戒","沙僧","虎力大仙","鹿力大仙","羊力大仙","车迟国国王"],highlight:"六场赌斗层层升级 · 全剧最欢乐 · 夜闹三清观名场面"},
+  {rank:8,ep:12,title:"夺宝莲花洞",summary:"平顶山莲花洞金角大王和银角大王——太上老君两个看炉童子下凡——手持紫金红葫芦、羊脂玉净瓶、七星剑、芭蕉扇、幌金绳五件法宝，法力高强。银角大王变作跌断腿的道人骗唐僧，用移山倒海之法压住悟空。悟空巧妙周旋偷换葫芦、骗装银角、收服金角，太上老君出面接回童子。五件法宝轮番登场，计谋百出。",quotes:["\"行者孙！\" \"你外公在此！\"","\"我叫你一声，你敢答应吗？\""],chars:["孙悟空","猪八戒","金角大王","银角大王","九尾狐","精细鬼","伶俐虫","太上老君"],highlight:"我叫你一声你敢答应吗 · 智斗经典 · 一集五法宝"},
+  {rank:9,ep:7,title:"计收猪八戒",summary:"师徒来到高老庄，高太公哭诉女婿是妖怪霸占了女儿高翠兰。悟空变作翠兰模样在绣楼等候，妖怪回来现了原形——正是天蓬元帅投错猪胎的猪刚鬣。一番打斗后，得知他受观音点化在此等候取经人。唐僧收其为二徒弟，赐名\"猪悟能\"，别名\"八戒\"。那个好吃懒做、贪财好色又憨厚可爱的二师兄正式加入取经队伍。",quotes:["\"丈人啊，你招了俺老猪，保你一家吃穿不愁！\"","\"师父，俺老猪跟定你了！\""],chars:["唐僧","孙悟空","猪八戒","高太公","高翠兰"],highlight:"猪八戒正式入队 · 二师兄名场面 · 经典高老庄"},
+  {rank:10,ep:9,title:"偷吃人参果",summary:"万寿山五庄观镇元大仙有灵根人参果树，三千年一开花三千年一结果三千年方成熟，闻一闻活三百六十岁，吃一个活四万七千年。悟空八戒偷吃人参果被道童辱骂，一怒推倒果树。镇元大仙赶回将师徒捉回。悟空遍访仙山求医树之方，最终观音菩萨用杨柳枝蘸玉净瓶甘露救活果树，镇元大仙与悟空结为兄弟。",quotes:["\"你这猴子，忒也无礼！\"","\"俺老孙做事俺老孙当！\""],chars:["孙悟空","猪八戒","唐僧","镇元大仙","观音菩萨","福禄寿三星"],highlight:"人参果树名场面 · 观音医树 · 与地仙之祖结拜"},
+  {rank:11,ep:21,title:"错坠盘丝洞",summary:"盘丝洞中七个蜘蛛精姐妹在濯垢泉沐浴，唐僧误入被捉。悟空变作老鹰叼走衣服，八戒变作鲇鱼在池中乱窜——场面既香艳又滑稽。蜘蛛精请来师兄蜈蚣精（百眼魔君/多目怪）助阵，多目怪肋下千只眼迸射金光，悟空不敌。黎山老母化作妇人指点，请来毗蓝婆菩萨用绣花针破了金光，收服多目怪。",quotes:["\"好你个弼马温！\"","\"妖精，你孙外公来了！\""],chars:["孙悟空","猪八戒","唐僧","蜘蛛精七姐妹","蜈蚣精","黎山老母","毗蓝婆菩萨"],highlight:"七蜘蛛濯垢泉沐浴 · 经典香艳场面 · 八戒变鲇鱼"},
+  {rank:12,ep:13,title:"除妖乌鸡国",summary:"乌鸡国真国王被狮猁怪（文殊菩萨坐骑青毛狮子）推入御花园井中淹死，妖怪变作国王模样占了江山。国王鬼魂托梦唐僧，悟空设计引太子入瓮揭穿真相，从井中捞出国王尸身。为救国王，悟空上兜率宫向太上老君讨要九转还魂丹，一番斗智讨得一颗，国王还阳复位。全剧悬疑探案风格最浓的一集。",quotes:["\"你是何方妖孽，竟敢霸占国王之位！\"","\"你这猴子，又来讨俺的仙丹！\""],chars:["孙悟空","唐僧","猪八戒","乌鸡国国王","狮猁怪","乌鸡国太子","太上老君"],highlight:"国王托梦 · 井中捞尸 · 向老君讨仙丹 · 悬疑探案风"},
+  {rank:13,ep:24,title:"天竺收玉兔",summary:"天竺国公主被月宫下凡的玉兔精顶替，真公主被囚布金禅寺。玉兔精假借抛绣球招亲选中唐僧，要招为驸马。悟空识破妖身一路追打，玉兔精逃进毛颖山洞。悟空正要取性命，太阴星君携嫦娥赶到收走了私自下凡的玉兔。天竺公主重归王位，师徒离西天越来越近。",quotes:["\"我乃天竺国公主，你又是谁？\"","\"你这孽畜，私自下凡，还不束手就擒！\""],chars:["孙悟空","唐僧","玉兔精","天竺国真公主","嫦娥","太阴星君"],highlight:"假公主抛绣球 · 玉兔精终被收服 · 异域风情"},
+  {rank:14,ep:11,title:"智激美猴王",summary:"悟空被逐后，唐僧在宝象国遇黄袍怪（二十八宿之奎木狼下凡），沙僧被抓八戒败走。黄袍怪到宝象国颠倒黑白反诬唐僧是虎精，将唐僧变成斑斓猛虎锁在笼中。白龙马变作宫女行刺受伤。八戒无奈上花果山激将悟空出山，悟空变作百花羞公主混入妖洞，降服黄袍怪救出师父。师徒冰释前嫌重归于好。",quotes:["\"大师兄，师父被妖怪变成老虎了！\"","\"好你个奎木狼，私自下凡为非作歹！\""],chars:["孙悟空","猪八戒","沙僧","白龙马","唐僧","黄袍怪","百花羞公主","宝象国国王"],highlight:"唐僧变虎 · 八戒智激悟空 · 全剧最虐师徒关系"},
+  {rank:15,ep:5,title:"猴王保唐僧",summary:"悟空被压在五行山下五百年，观音菩萨指点唐僧前来揭去山顶金字压帖。悟空破山而出正式拜师。路遇六个强盗被悟空打死，唐僧责备，悟空赌气离去。观音化作老母赠唐僧紧箍咒和绵布直裰。悟空被龙王劝回，好奇戴上紧箍，唐僧念咒——从此那个无法无天的齐天大圣有了唯一的束缚。",quotes:["\"师父，再念一遍试试？\" \"啊——头痛！头痛！\"","\"你这猢狲，今后若再行凶，我就念这紧箍咒！\""],chars:["唐僧","孙悟空","观音菩萨","东海龙王"],highlight:"悟空破山而出 · 紧箍咒首次登场 · 师徒关系的开始"},
+  {rank:16,ep:4,title:"困囚五行山",summary:"悟空大闹天宫引如来佛祖出手。如来与悟空打赌：若能一筋斗翻出他的手掌心，就请玉帝让出天宫。悟空翻了数十万里，在五根肉红柱下写下\"齐天大圣到此一游\"，不料那正是如来的五根手指。如来翻掌将悟空压入五行山下，贴上金字压帖。天庭开安天大会欢庆，五百年漫长的等待就此开始。",quotes:["\"俺老孙一个筋斗就是十万八千里，怎会翻不出你的手掌？\"","\"你这猴头，还不知天高地厚！\""],chars:["孙悟空","如来佛祖","玉皇大帝","阿难","迦叶"],highlight:"如来佛掌 · 齐天大圣到此一游 · 五百年镇压"},
+  {rank:17,ep:18,title:"扫塔辨奇冤",summary:"师徒到祭赛国，金光寺宝塔的佛宝舍利被九头虫盗走，国王怪罪寺僧。悟空与唐僧夜扫宝塔，发现塔顶有两小妖——奔波儿灞与灞波儿奔——得知九头虫与万圣龙王在碧波潭作怪。悟空八戒前往潭中大战，二郎神恰巧路过助阵，射伤九头虫。夺回佛宝归还金光寺，寺名改为\"伏龙寺\"。",quotes:["\"奔波儿灞！\" \"灞波儿奔！\"","\"我乃灌江口二郎显圣真君！\""],chars:["孙悟空","猪八戒","唐僧","九头虫","奔波儿灞","灞波儿奔","万圣龙王","二郎神"],highlight:"奔波儿灞灞波儿奔 · 二郎神助阵 · 金光寺扫塔"},
+  {rank:18,ep:2,title:"官封弼马温",summary:"悟空学艺归来，东海夺宝地府勾名，龙王阎王告上天庭。太白金星奉旨招安，封悟空为\"弼马温\"。悟空勤勤恳恳放马天河，把天马养得膘肥体壮。一日得知弼马温是末等小官的真相，勃然大怒，打出南天门反下天庭，回到花果山竖起\"齐天大圣\"大旗。天庭派巨灵神和哪吒征讨，惨败而归。",quotes:["\"弼马温？这官有多大？\" \"不入流。\"","\"小的们，竖起旗来！齐天大圣在此！\""],chars:["孙悟空","玉皇大帝","太白金星","巨灵神","哪吒","独角鬼王"],highlight:"弼马温真相揭露 · 齐天大圣旗竖立 · 天庭初战"},
+  {rank:19,ep:19,title:"误入小雷音",summary:"师徒来到小西天，见一寺院高悬\"小雷音寺\"匾额。唐僧误以为是西天灵山，执意跪拜进去。寺中坐着的\"如来\"实为黄眉怪（弥勒佛座下黄眉童子）变化，用金铙将悟空合在其中，又用人种袋收了众多天兵。二十八宿亢金龙用角钻破金铙救出悟空，弥勒佛亲临化作瓜农，设计让黄眉怪吃下悟空变的西瓜才将其收服。",quotes:["\"此乃小雷音寺，自然是佛祖的道场！\"","\"师父，那不是佛，是妖怪！\""],chars:["孙悟空","唐僧","黄眉怪","弥勒佛","二十八宿"],highlight:"假雷音寺 · 金铙困悟空 · 弥勒佛变瓜农 · 人种袋名场面"},
+  {rank:20,ep:6,title:"祸起观音院",summary:"师徒到观音禅院借宿，老方丈金池长老贪唐僧的锦斓袈裟，听信广智广谋之计欲烧死师徒。悟空借来避火罩护住师父，反将禅院烧个精光。黑熊精趁火打劫盗走袈裟，悟空追至黑风山不敌。观音菩萨化作凌虚子，用计降服黑熊精，收为落伽山守山大神，袈裟物归原主。",quotes:["\"贫僧这件袈裟，乃观音菩萨所赐。\"","\"你这黑厮，快把我师父的袈裟还来！\""],chars:["孙悟空","唐僧","金池长老","广智","广谋","黑熊精","观音菩萨","凌虚子"],highlight:"锦斓袈裟争宝 · 观音院大火 · 黑熊精被收"},
+  {rank:21,ep:8,title:"坎途逢三难",summary:"一难：黄风岭黄风怪吹出三昧神风，悟空眼被吹伤，请来灵吉菩萨用飞龙杖降服。二难：流沙河遇沙僧，八戒下水大战不分胜负，悟空请观音派木吒前来点化，沙僧皈依拜师。三难：四圣（黎山老母、观音、文殊、普贤）化作母女四人以招婿试探禅心，八戒色心大动蒙眼撞天婚，被珍珠锦汗衫捆在树上吊了一夜，羞愧难当。",quotes:["\"真真、爱爱、怜怜，你们在哪里？\"","\"八戒，你昨晚可睡得安稳？\""],chars:["唐僧","孙悟空","猪八戒","沙僧","黄风怪","灵吉菩萨","黎山老母","木吒"],highlight:"一集三难 · 沙僧归队 · 四圣试禅心 · 八戒撞天婚"},
+  {rank:22,ep:20,title:"孙猴巧行医",summary:"朱紫国国王因思念被赛太岁（观音坐骑金毛犼）掳走的金圣宫娘娘，积郁成疾。悟空悬丝诊脉，用大黄巴豆配锅底灰（取\"百草霜\"之名）制成\"乌金丹\"，再以无根水送服，竟药到病除。悟空前往降妖，偷得紫金铃反制赛太岁，观音赶来收走金毛犼。金圣宫娘娘因穿着紫阳真人赠的护体棕衣未遭玷污，夫妻团圆。",quotes:["\"悟空，你还会行医？\" \"俺老孙什么不会！\"","\"悬丝诊脉，三根丝线搭三关。\""],chars:["孙悟空","猪八戒","朱紫国国王","金圣宫娘娘","赛太岁","观音菩萨","有来有去"],highlight:"悟空行医 · 悬丝诊脉 · 乌金丹 · 紫金铃反制"},
+  {rank:23,ep:25,title:"波生极乐天",summary:"历经九九八十一难，师徒终到灵山。阿难迦叶索要人事未果，传了无字经书。燃灯古佛派白雄尊者追回经书，师徒重返灵山，以紫金钵盂为\"人事\"换得有字真经。八大金刚驾云送回东土，途中观音查点灾难簿发现只历八十难，又加一难：通天河老鼋驮师徒渡河时因唐僧忘了代问年寿而翻入水中，经书尽湿。最终师徒回到大唐，受太宗迎接，被如来加封为佛。",quotes:["\"经不可轻传，亦不可以空取。\"","\"九九八十一难，少一难都不行。\""],chars:["唐僧","孙悟空","猪八戒","沙僧","白龙马","如来佛祖","阿难","迦叶","燃灯古佛","老鼋","唐太宗"],highlight:"无字经书 · 紫金钵盂换真经 · 老鼋翻水补满八十一难 · 五圣成真"},
+  {rank:24,ep:22,title:"四探无底洞",summary:"陷空山无底洞金鼻白毛老鼠精（自称地涌夫人、半截观音）设计掳走唐僧，要取其元阳修道。此洞深三百余里，悟空三进三出未能降服。探洞时偶然发现妖怪供奉托塔李天王和哪吒的牌位，这才知道老鼠精是李天王的义女。悟空上天告状，李天王与哪吒亲自下界，将老鼠精押回天庭发落。",quotes:["\"此洞深不见底，名唤无底洞！\"","\"好个李天王，你义女在下界为妖，你可知罪？\""],chars:["孙悟空","猪八戒","唐僧","金鼻白毛老鼠精","托塔李天王","哪吒"],highlight:"无底洞深三百里 · 老鼠精与李天王 · 悟空三进三出"},
+  {rank:25,ep:23,title:"传艺玉华州",summary:"天竺国玉华州三位王子分别拜悟空、八戒、沙僧为师学武艺，照金箍棒、九齿钉耙、降妖宝杖式样打造兵器。不料被黄狮精趁夜盗走三件兵器欲开\"钉耙会\"。悟空等寻到豹头山虎口洞夺回兵器，黄狮精逃往竹节山请九灵元圣（太乙救苦天尊的九头狮子）报仇。九灵元圣九口齐张将师徒擒获，最终太乙天尊亲至收服。",quotes:["\"三位王子好武，拜我等为师如何？\"","\"好个九头狮子，果然厉害！\""],chars:["孙悟空","猪八戒","沙僧","玉华州三位王子","黄狮精","九灵元圣","太乙救苦天尊"],highlight:"三王子拜师 · 兵器被盗 · 九灵元圣九口擒悟空"}
+];
+
 const categories = [
   {id:"all", label:"全部角色"},
   {id:"team", label:"取经团队"},
@@ -393,6 +473,7 @@ const categories = [
   {id:"demon", label:"妖怪精怪"},
   {id:"mortal", label:"凡人体系"},
   {id:"item", label:"法宝/其他"},
+  {id:"episodes", label:"分集剧情"},
 ];
 const impLabels = {main:"主角", support:"重要配角", minor:"次要角色", extra:"龙套"};
 const impClasses = {main:"main", support:"support", minor:"minor", extra:"extra"};
@@ -420,10 +501,11 @@ function init() {
     <div class="stat-card immortal"><div class="num">${counts.immortal}</div><div class="label">☁️ 神仙体系</div></div>
     <div class="stat-card demon"><div class="num">${counts.demon}</div><div class="label">👹 妖怪精怪</div></div>
     <div class="stat-card mortal"><div class="num">${counts.mortal}</div><div class="label">👤 凡人体系</div></div>
-    <div class="stat-card item"><div class="num">${counts.item}</div><div class="label">💎 法宝/其他</div></div>`;
+    <div class="stat-card item"><div class="num">${counts.item}</div><div class="label">💎 法宝/其他</div></div>
+    <div class="stat-card" style="background:linear-gradient(135deg,#fff9e6,#fff3cd);"><div class="num" style="color:#e65100;">25</div><div class="label">📺 分集剧情</div></div>`;
   document.getElementById("totalCount").textContent = total;
   document.getElementById("tabs").innerHTML = categories.map(c => {
-    const cnt = c.id === "all" ? total : (counts[c.id] || 0);
+    const cnt = c.id === "all" ? total : (c.id === "episodes" ? 25 : (counts[c.id] || 0));
     return `<button class="tab${c.id===activeCat?' active':''}" data-cat="${c.id}">${c.label}<span class="count">(${cnt})</span></button>`;
   }).join("");
 
@@ -436,7 +518,18 @@ function init() {
   document.querySelectorAll(".tab").forEach(tab => {
     tab.addEventListener("click", function() {
       document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-      this.classList.add("active"); activeCat = this.dataset.cat; renderAll();
+      this.classList.add("active"); activeCat = this.dataset.cat;
+      // Toggle importance filter visibility
+      const filterGroup = document.getElementById("importanceFilter");
+      const searchInput = document.getElementById("search");
+      if (activeCat === "episodes") {
+        filterGroup.style.display = "none";
+        searchInput.placeholder = "搜索剧情标题或集数...";
+      } else {
+        filterGroup.style.display = "";
+        searchInput.placeholder = "搜索角色名称或身份...";
+      }
+      renderAll();
     });
   });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeModalDirect(); });
@@ -475,8 +568,63 @@ function closeModalDirect() {
 }
 
 // ===== RENDER =====
+function getRankClass(rank) {
+  if (rank <= 3) return "fire";
+  if (rank <= 8) return "gold";
+  if (rank <= 15) return "silver";
+  if (rank <= 22) return "bronze";
+  return "normal";
+}
+function getHotLabel(rank) {
+  if (rank <= 3) return '<span class="hot-badge super">🔥 必看神作</span>';
+  if (rank <= 8) return '<span class="hot-badge star">⭐ 经典必看</span>';
+  if (rank <= 18) return '<span class="hot-badge good">👍 精彩好剧</span>';
+  return '';
+}
+
 function renderAll() {
   const query = document.getElementById("search").value.trim().toLowerCase();
+
+  // Episode mode
+  if (activeCat === "episodes") {
+    let filtered = episodes;
+    if (query) {
+      filtered = episodes.filter(e =>
+        e.title.toLowerCase().includes(query) ||
+        e.summary.toLowerCase().includes(query) ||
+        String(e.ep).includes(query) ||
+        (e.chars && e.chars.some(ch => ch.toLowerCase().includes(query))) ||
+        (e.highlight && e.highlight.toLowerCase().includes(query))
+      );
+    }
+    document.getElementById("resultInfo").innerHTML = `找到 <strong>${filtered.length}</strong> 集剧情`;
+
+    let html = '<div class="ep-header-bar"><div class="sort-info">按观众喜爱度排行 ↓</div></div><div class="ep-cards">';
+    filtered.forEach(e => {
+      html += `
+      <div class="ep-card" onclick="openEpModal(episodes[${episodes.indexOf(e)}])">
+        <div class="ep-rank ${getRankClass(e.rank)}">${e.rank}</div>
+        <div class="ep-info">
+          <div class="ep-title-row">
+            <span class="ep-num">第${e.ep}集</span>
+            <span class="ep-title">${e.title}</span>
+            ${getHotLabel(e.rank)}
+          </div>
+          <div class="ep-summary">${e.summary}</div>
+          <div class="ep-chars">${(e.chars||[]).map(c=>`<span class="ep-char-tag">${c}</span>`).join("")}</div>
+          <div class="ep-highlight">${e.highlight}</div>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+    if (filtered.length === 0) {
+      html = '<div class="no-result"><div class="big">📺</div><p>没有匹配的剧情，试试换个关键词？</p></div>';
+    }
+    document.getElementById("tabContents").innerHTML = html;
+    return;
+  }
+
+  // Character mode
   let filtered = characters;
   if (activeCat !== "all") filtered = filtered.filter(c => c.cat === activeCat);
   if (activeImp !== "all") filtered = filtered.filter(c => c.imp === activeImp);
@@ -487,7 +635,7 @@ function renderAll() {
   }
   document.getElementById("resultInfo").innerHTML = `找到 <strong>${filtered.length}</strong> 个角色`;
 
-  const catOrder = activeCat === "all" ? categories.filter(c => c.id !== "all") : categories.filter(c => c.id === activeCat);
+  const catOrder = activeCat === "all" ? categories.filter(c => c.id !== "all" && c.id !== "episodes") : categories.filter(c => c.id === activeCat);
   let html = "";
   catOrder.forEach(cat => {
     const catChars = filtered.filter(c => c.cat === cat.id);
@@ -527,6 +675,35 @@ function renderAll() {
     html = `<div class="no-result"><div class="big">🔍</div><p>没有找到匹配的角色，试试换个关键词？</p></div>`;
   }
   document.getElementById("tabContents").innerHTML = html;
+}
+
+// ===== EPISODE MODAL =====
+function openEpModal(e) {
+  const hero = document.getElementById("modalHero");
+  const body = document.getElementById("modalBody");
+  const rc = getRankClass(e.rank);
+  hero.className = "modal-hero ep-modal-hero " + rc;
+  hero.innerHTML = `
+    <div class="ep-modal-rank">#${e.rank}</div>
+    <div class="ep-modal-num">第 ${e.ep} 集</div>
+    <div class="ep-modal-title">${e.title}</div>`;
+
+  let quotesHtml = "";
+  if (e.quotes && e.quotes.length > 0) {
+    quotesHtml = `<div class="ep-modal-quotes"><div class="qlabel">🎬 经典台词</div>${e.quotes.map(q => `<div class="quote">${q}</div>`).join("")}</div>`;
+  }
+
+  body.innerHTML = `
+    <h2>第${e.ep}集 ${e.title} <span class="tag" style="background:#fff3e0;color:#e65100;border:1px solid #ffcc80;">观众喜爱度 #${e.rank}</span></h2>
+    ${e.highlight ? `<div style="font-size:14px;color:var(--red);margin-bottom:12px;opacity:.9;">💡 ${e.highlight}</div>` : ""}
+    <div class="ep-modal-summary">${e.summary}</div>
+    ${quotesHtml}
+    <div class="ep-modal-chars"><div class="clabel">🎭 本集关键角色</div><div class="ctags">${(e.chars||[]).map(c => `<span class="ctag">${c}</span>`).join("")}</div></div>
+    <div style="margin-top:16px;font-size:13px;color:var(--text-light);">全剧共25集 · 按观众喜爱度排序</div>
+  `;
+
+  document.getElementById("modal").style.display = "flex";
+  document.body.style.overflow = "hidden";
 }
 
 init();
