@@ -31,8 +31,9 @@ body { font-family: "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; b
 
 /* Stats */
 .stats { display:flex; flex-wrap:wrap; gap:16px; max-width:1100px; margin:-28px auto 0; padding:0 24px; justify-content:center; position:relative; z-index:2; }
-.stat-card { background:var(--card-bg); border-radius:12px; padding:20px 28px; box-shadow:var(--shadow-lg); min-width:140px; text-align:center; flex:1; max-width:200px; transition:transform .2s; }
-.stat-card:hover { transform:translateY(-4px); }
+.stat-card { background:var(--card-bg); border-radius:12px; padding:20px 28px; box-shadow:var(--shadow-lg); min-width:140px; text-align:center; flex:1; max-width:200px; transition:transform .2s, box-shadow .2s; cursor:pointer; user-select:none; }
+.stat-card:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,.18); }
+.stat-card:active { transform:translateY(-2px); }
 .stat-card .num { font-size:36px; font-weight:800; line-height:1; }
 .stat-card .label { font-size:13px; color:var(--text-light); margin-top:6px; }
 .stat-card.team .num { color:var(--main-color); }
@@ -40,6 +41,8 @@ body { font-family: "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; b
 .stat-card.demon .num { color:#6a1b9a; }
 .stat-card.mortal .num { color:#00838f; }
 .stat-card.item .num { color:#2e7d32; }
+.stat-card.ep { background:linear-gradient(135deg,#fff9e6,#fff3cd); }
+.stat-card.ep .num { color:#e65100; }
 
 .container { max-width:1300px; margin:0 auto; padding:24px; }
 
@@ -497,12 +500,12 @@ function init() {
   let total = 0;
   characters.forEach(c => { counts[c.cat]++; total++; });
   document.getElementById("stats").innerHTML = `
-    <div class="stat-card team"><div class="num">${counts.team}</div><div class="label">🏆 取经团队</div></div>
-    <div class="stat-card immortal"><div class="num">${counts.immortal}</div><div class="label">☁️ 神仙体系</div></div>
-    <div class="stat-card demon"><div class="num">${counts.demon}</div><div class="label">👹 妖怪精怪</div></div>
-    <div class="stat-card mortal"><div class="num">${counts.mortal}</div><div class="label">👤 凡人体系</div></div>
-    <div class="stat-card item"><div class="num">${counts.item}</div><div class="label">💎 法宝/其他</div></div>
-    <div class="stat-card" style="background:linear-gradient(135deg,#fff9e6,#fff3cd);"><div class="num" style="color:#e65100;">25</div><div class="label">📺 分集剧情</div></div>`;
+    <div class="stat-card team" data-cat="team" title="点击查看取经团队"><div class="num">${counts.team}</div><div class="label">🏆 取经团队</div></div>
+    <div class="stat-card immortal" data-cat="immortal" title="点击查看神仙体系"><div class="num">${counts.immortal}</div><div class="label">☁️ 神仙体系</div></div>
+    <div class="stat-card demon" data-cat="demon" title="点击查看妖怪精怪"><div class="num">${counts.demon}</div><div class="label">👹 妖怪精怪</div></div>
+    <div class="stat-card mortal" data-cat="mortal" title="点击查看凡人体系"><div class="num">${counts.mortal}</div><div class="label">👤 凡人体系</div></div>
+    <div class="stat-card item" data-cat="item" title="点击查看法宝/其他"><div class="num">${counts.item}</div><div class="label">💎 法宝/其他</div></div>
+    <div class="stat-card ep" data-cat="episodes" title="点击查看分集剧情"><div class="num">25</div><div class="label">🎬 分集剧情</div></div>`;
   document.getElementById("totalCount").textContent = total;
   document.getElementById("tabs").innerHTML = categories.map(c => {
     const cnt = c.id === "all" ? total : (c.id === "episodes" ? 25 : (counts[c.id] || 0));
@@ -516,24 +519,32 @@ function init() {
     });
   });
   document.querySelectorAll(".tab").forEach(tab => {
-    tab.addEventListener("click", function() {
-      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-      this.classList.add("active"); activeCat = this.dataset.cat;
-      // Toggle importance filter visibility
-      const filterGroup = document.getElementById("importanceFilter");
-      const searchInput = document.getElementById("search");
-      if (activeCat === "episodes") {
-        filterGroup.style.display = "none";
-        searchInput.placeholder = "搜索剧情标题或集数...";
-      } else {
-        filterGroup.style.display = "";
-        searchInput.placeholder = "搜索角色名称或身份...";
-      }
-      renderAll();
-    });
+    tab.addEventListener("click", function() { switchTab(this.dataset.cat); });
+  });
+  document.querySelectorAll(".stat-card").forEach(card => {
+    if (!card.dataset.cat) return;
+    card.addEventListener("click", function() { switchTab(this.dataset.cat); });
   });
   document.addEventListener("keydown", e => { if (e.key === "Escape") closeModalDirect(); });
   renderAll();
+}
+
+function switchTab(cat) {
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  const target = document.querySelector(`.tab[data-cat="${cat}"]`);
+  if (target) target.classList.add("active");
+  activeCat = cat;
+  const filterGroup = document.getElementById("importanceFilter");
+  const searchInput = document.getElementById("search");
+  if (activeCat === "episodes") {
+    filterGroup.style.display = "none";
+    searchInput.placeholder = "搜索剧情标题或集数...";
+  } else {
+    filterGroup.style.display = "";
+    searchInput.placeholder = "搜索角色名称或身份...";
+  }
+  renderAll();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 // ===== MODAL =====
