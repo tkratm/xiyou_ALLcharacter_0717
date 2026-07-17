@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>86版《西游记》角色全清单</title>
+<style>
+:root {
+  --red: #b71c1c; --red-light: #e53935;
+  --gold: #c8960c;
+  --bg: #fdf6ec; --card-bg: #fffef9;
+  --text: #2c1810; --text-light: #6b5a4e; --border: #e8dcc8;
+  --shadow: 0 2px 12px rgba(0,0,0,.06); --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+  --main-color: #e53935; --main-bg: #ffeaea;
+  --support-color: #e67e22; --support-bg: #fff3e6;
+  --minor-color: #5c6bc0; --minor-bg: #eef0fb;
+  --extra-color: #999; --extra-bg: #f5f5f5;
+  --item-color: #00897b; --item-bg: #e6f5f2;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: "PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+
+/* Hero */
+.hero { background:linear-gradient(135deg,#4a1111 0%,#8b1a1a 30%,#b71c1c 60%,#7f1414 100%); color:#fff; padding:48px 24px 40px; text-align:center; position:relative; overflow:hidden; }
+.hero::before { content:""; position:absolute; top:-40px; right:-40px; width:200px; height:200px; border:2px solid rgba(255,255,255,.1); border-radius:50%; }
+.hero::after { content:""; position:absolute; bottom:-60px; left:-30px; width:180px; height:180px; border:2px solid rgba(255,255,255,.08); border-radius:50%; }
+.hero h1 { font-size:clamp(28px,5vw,48px); letter-spacing:4px; margin-bottom:8px; }
+.hero .sub { font-size:15px; opacity:.75; }
+.hero .cloud { position:absolute; top:50%; transform:translateY(-50%); opacity:.06; font-size:120px; pointer-events:none; user-select:none; }
+.hero .cloud.left { left:5%; } .hero .cloud.right { right:5%; }
+
+/* Stats */
+.stats { display:flex; flex-wrap:wrap; gap:16px; max-width:1100px; margin:-28px auto 0; padding:0 24px; justify-content:center; position:relative; z-index:2; }
+.stat-card { background:var(--card-bg); border-radius:12px; padding:20px 28px; box-shadow:var(--shadow-lg); min-width:140px; text-align:center; flex:1; max-width:200px; transition:transform .2s; }
+.stat-card:hover { transform:translateY(-4px); }
+.stat-card .num { font-size:36px; font-weight:800; line-height:1; }
+.stat-card .label { font-size:13px; color:var(--text-light); margin-top:6px; }
+.stat-card.team .num { color:var(--main-color); }
+.stat-card.immortal .num { color:#1565c0; }
+.stat-card.demon .num { color:#6a1b9a; }
+.stat-card.mortal .num { color:#00838f; }
+.stat-card.item .num { color:#2e7d32; }
+
+.container { max-width:1300px; margin:0 auto; padding:24px; }
+
+/* Toolbar */
+.toolbar { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:24px; }
+.search-box { flex:1; min-width:240px; position:relative; }
+.search-box input { width:100%; padding:12px 16px 12px 44px; border:2px solid var(--border); border-radius:10px; font-size:15px; background:var(--card-bg); color:var(--text); transition:border-color .2s; outline:none; }
+.search-box input:focus { border-color:var(--gold); }
+.search-box .icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); font-size:18px; opacity:.4; }
+.filter-group { display:flex; gap:8px; flex-wrap:wrap; }
+.filter-btn { padding:8px 18px; border-radius:20px; border:1.5px solid var(--border); background:var(--card-bg); cursor:pointer; font-size:13px; color:var(--text-light); transition:all .2s; white-space:nowrap; }
+.filter-btn:hover { border-color:var(--gold); color:var(--text); }
+.filter-btn.active { background:var(--red); color:#fff; border-color:var(--red); }
+.result-info { font-size:13px; color:var(--text-light); margin-bottom:4px; }
+.result-info strong { color:var(--red); }
+
+/* Tabs */
+.tabs { display:flex; gap:4px; margin-bottom:24px; overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch; }
+.tab { padding:12px 24px; border-radius:10px 10px 0 0; cursor:pointer; font-size:15px; font-weight:600; white-space:nowrap; border:none; background:transparent; color:var(--text-light); transition:all .2s; position:relative; }
+.tab:hover { color:var(--text); background:rgba(0,0,0,.03); }
+.tab.active { color:var(--red); background:var(--card-bg); box-shadow:0 -2px 8px rgba(0,0,0,.04); }
+.tab .count { font-size:12px; font-weight:400; opacity:.6; margin-left:4px; }
+
+/* Cards */
+.section-header { font-size:14px; font-weight:700; color:var(--text-light); margin:24px 0 12px; padding-bottom:8px; border-bottom:1px dashed var(--border); display:flex; align-items:center; gap:8px; letter-spacing:1px; }
+.section-header .dot { width:8px; height:8px; border-radius:50%; background:var(--gold); }
+.cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:14px; }
+.card { background:var(--card-bg); border-radius:10px; padding:14px 16px; box-shadow:var(--shadow); border-left:4px solid transparent; transition:all .2s; cursor:pointer; display:flex; gap:14px; align-items:center; }
+.card:hover { transform:translateY(-2px); box-shadow:var(--shadow-lg); }
+.card.main { border-left-color:var(--main-color); }
+.card.support { border-left-color:var(--support-color); }
+.card.minor { border-left-color:var(--minor-color); }
+.card.extra { border-left-color:var(--extra-color); }
+.card.item-card { border-left-color:var(--item-color); }
+
+/* Avatar thumbnail */
+.avatar { width:52px; height:52px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:22px; font-weight:800; color:#fff; overflow:hidden; background:linear-gradient(135deg, #667eea, #764ba2); background-size:cover; background-position:center; position:relative; }
+.avatar img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.avatar.team { background:linear-gradient(135deg, #e53935, #ff6f00); }
+.avatar.immortal { background:linear-gradient(135deg, #3949ab, #1565c0); }
+.avatar.demon { background:linear-gradient(135deg, #7b1fa2, #e040fb); }
+.avatar.mortal { background:linear-gradient(135deg, #00695c, #00897b); }
+.avatar.item { background:linear-gradient(135deg, #2e7d32, #66bb6a); }
+
+.card .info { flex:1; min-width:0; }
+.card .name { font-size:17px; font-weight:700; margin-bottom:3px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.card .name .tag { font-size:10px; padding:2px 7px; border-radius:10px; font-weight:500; white-space:nowrap; }
+.tag-main { background:var(--main-bg); color:var(--main-color); }
+.tag-support { background:var(--support-bg); color:var(--support-color); }
+.tag-minor { background:var(--minor-bg); color:var(--minor-color); }
+.tag-extra { background:var(--extra-bg); color:var(--extra-color); }
+.tag-item { background:var(--item-bg); color:var(--item-color); }
+.card .identity { font-size:12px; color:var(--text-light); line-height:1.4; }
+.card .meta { font-size:11px; color:var(--text-light); margin-top:4px; display:flex; gap:10px; opacity:.7; }
+
+/* Modal */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.65); z-index:1000; display:flex; align-items:center; justify-content:center; padding:24px; animation:fadeIn .2s; }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes slideUp { from { transform:translateY(30px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+.modal-content { background:var(--card-bg); border-radius:16px; max-width:480px; width:100%; max-height:90vh; overflow-y:auto; box-shadow:0 20px 60px rgba(0,0,0,.3); animation:slideUp .25s; position:relative; }
+.modal-close { position:absolute; top:12px; right:14px; width:36px; height:36px; border-radius:50%; border:none; background:rgba(0,0,0,.08); cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; color:var(--text-light); z-index:2; transition:all .2s; }
+.modal-close:hover { background:rgba(0,0,0,.15); color:var(--text); }
+
+.modal-hero { width:100%; aspect-ratio:1/1; max-height:60vh; display:flex; align-items:center; justify-content:center; font-size:72px; color:#fff; font-weight:900; position:relative; overflow:hidden; }
+.modal-hero img { width:100%; height:100%; object-fit:contain; position:absolute; inset:0; background:rgba(0,0,0,.15); }
+.modal-hero .avatar-text { position:relative; z-index:1; }
+.modal-hero.team { background:linear-gradient(135deg, #e53935, #ff6f00); }
+.modal-hero.immortal { background:linear-gradient(135deg, #3949ab, #1565c0); }
+.modal-hero.demon { background:linear-gradient(135deg, #7b1fa2, #e040fb); }
+.modal-hero.mortal { background:linear-gradient(135deg, #00695c, #00897b); }
+.modal-hero.item { background:linear-gradient(135deg, #2e7d32, #66bb6a); }
+
+.modal-body { padding:24px; }
+.modal-body h2 { font-size:26px; margin-bottom:4px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.modal-body h2 .tag { font-size:12px; padding:3px 10px; border-radius:12px; font-weight:500; }
+.modal-body .aka { font-size:15px; color:var(--text-light); margin-bottom:12px; }
+.modal-body .detail-row { display:flex; gap:16px; margin-bottom:14px; flex-wrap:wrap; }
+.modal-body .detail-item { background:var(--bg); border-radius:8px; padding:10px 14px; flex:1; min-width:100px; }
+.modal-body .detail-item .dlabel { font-size:11px; color:var(--text-light); text-transform:uppercase; letter-spacing:1px; margin-bottom:2px; }
+.modal-body .detail-item .dval { font-size:15px; font-weight:600; }
+
+/* No result */
+.no-result { text-align:center; padding:60px 20px; color:var(--text-light); }
+.no-result .big { font-size:48px; margin-bottom:12px; }
+
+.footer { text-align:center; padding:40px 24px; color:var(--text-light); font-size:13px; border-top:1px solid var(--border); margin-top:40px; }
+.footer strong { color:var(--red-light); }
+
+@media (max-width:768px) {
+  .stats { margin-top:16px; }
+  .stat-card { padding:14px 16px; min-width:100px; }
+  .stat-card .num { font-size:28px; }
+  .cards { grid-template-columns:1fr; }
+  .hero { padding:32px 16px 28px; }
+  .hero h1 { font-size:24px; }
+  .modal-hero { height:180px; }
+}
+@media (max-width:480px) {
+  .tabs { gap:0; } .tab { padding:10px 14px; font-size:13px; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="cloud left">☁</div><div class="cloud right">☁</div>
+  <h1>86版《西游记》角色全清单</h1>
+  <p class="sub">央视版 · 神仙 · 妖怪 · 凡人 · 三大体系全收录</p>
+</div>
+
+<div class="stats" id="stats"></div>
+
+<div class="container">
+  <div class="toolbar">
+    <div class="search-box">
+      <span class="icon">🔍</span>
+      <input type="text" id="search" placeholder="搜索角色名称或身份..." oninput="renderAll()">
+    </div>
+    <div class="filter-group" id="importanceFilter">
+      <button class="filter-btn active" data-filter="all">全部</button>
+      <button class="filter-btn" data-filter="main">🟡 主角</button>
+      <button class="filter-btn" data-filter="support">🟢 重要配角</button>
+      <button class="filter-btn" data-filter="minor">⚪ 次要</button>
+      <button class="filter-btn" data-filter="extra">🔹 龙套</button>
+    </div>
+  </div>
+  <div class="result-info" id="resultInfo"></div>
+  <div class="tabs" id="tabs"></div>
+  <div id="tabContents"></div>
+</div>
+
+<div class="footer">
+  基于央视86版《西游记》25集整理 · 含续集标注 · 共收录 <strong id="totalCount">188</strong> 个角色<br>
+  <span style="opacity:.6">弼马温 🐒 整理 · 活阎王出品</span>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" style="display:none" onclick="closeModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-hero" id="modalHero"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+const characters = [
+{name:"唐僧", aka:"唐三藏 / 玄奘", identity:"金蝉子转世，大唐高僧", cat:"team", sub:"", imp:"main", img:"char_imgs/tangseng.webp"},
+{name:"孙悟空", aka:"齐天大圣 / 美猴王 / 孙行者", identity:"灵石所化，菩提祖师弟子", cat:"team", sub:"", imp:"main", img:"char_imgs/sunwukong.webp"},
+{name:"猪八戒", aka:"猪悟能", identity:"天蓬元帅转世", cat:"team", sub:"", imp:"main", img:"char_imgs/zhubajie.webp"},
+{name:"沙僧", aka:"沙悟净", identity:"卷帘大将转世", cat:"team", sub:"", imp:"main", img:"char_imgs/shaseng.webp"},
+{name:"白龙马", aka:"小白龙", identity:"西海龙王三太子", cat:"team", sub:"", imp:"main", img:"char_imgs/bailongma.webp"},
+
+  {name:"如来佛祖", aka:"", identity:"佛教最高尊神", cat:"immortal", sub:"西天灵山", imp:"support", img:"char_imgs/rulaifo.webp"},
+  {name:"观音菩萨", aka:"", identity:"取经总策划/负责人", cat:"immortal", sub:"西天灵山", imp:"support", img:"char_imgs/guanyin.webp"},
+  {name:"文殊菩萨", aka:"", identity:"菩萨", cat:"immortal", sub:"西天灵山", imp:"minor", img:"char_imgs/wenshu.webp"},
+  {name:"普贤菩萨", aka:"", identity:"菩萨", cat:"immortal", sub:"西天灵山", imp:"minor", img:"char_imgs/puxian.webp"},
+  {name:"地藏王菩萨", aka:"", identity:"幽冥教主", cat:"immortal", sub:"西天灵山", imp:"extra", img:"char_imgs/dizangwang.webp"},
+  {name:"阿难", aka:"", identity:"如来弟子", cat:"immortal", sub:"西天灵山", imp:"minor", img:"char_imgs/ananjiaye.webp"},
+  {name:"迦叶", aka:"", identity:"如来弟子", cat:"immortal", sub:"西天灵山", imp:"minor", img:"char_imgs/ananjiaye.webp"},
+  {name:"弥勒佛", aka:"东来佛祖", identity:"未来佛", cat:"immortal", sub:"西天灵山", imp:"minor", img:"char_imgs/milefo.webp"},
+  {name:"金蝉子", aka:"", identity:"唐僧前世", cat:"immortal", sub:"西天灵山", imp:"extra", img:"char_imgs/jinchanzi.webp"},
+  {name:"惠岸行者", aka:"木吒", identity:"观音弟子", cat:"immortal", sub:"西天灵山", imp:"minor", img:"char_imgs/muzha.webp"},
+  {name:"善财童子", aka:"红孩儿归正后", identity:"观音座下", cat:"immortal", sub:"西天灵山", imp:"minor", img:"char_imgs/shancaitongzi.webp"},
+  {name:"十八罗汉", aka:"", identity:"护法", cat:"immortal", sub:"西天灵山", imp:"extra", img:"char_imgs/shibaluohan.webp"},
+  {name:"四大金刚", aka:"", identity:"护法", cat:"immortal", sub:"西天灵山", imp:"extra", img:"char_imgs/sidajingang.webp"},
+  {name:"八大金刚", aka:"", identity:"护法", cat:"immortal", sub:"西天灵山", imp:"extra", img:"char_imgs/badajingang.webp"},
+  {name:"金顶大仙", aka:"", identity:"灵山接引", cat:"immortal", sub:"西天灵山", imp:"extra", img:"char_imgs/jindingdaxian.webp"},
+
+  {name:"玉皇大帝", aka:"", identity:"三界之主", cat:"immortal", sub:"天庭", imp:"support", img:"char_imgs/yuhuangdadi.webp"},
+  {name:"王母娘娘", aka:"", identity:"天庭女仙之首", cat:"immortal", sub:"天庭", imp:"minor", img:"char_imgs/wangmuniangniang.webp"},
+  {name:"太上老君", aka:"", identity:"道教始祖", cat:"immortal", sub:"天庭", imp:"support", img:"char_imgs/taishanglaojun.webp"},
+  {name:"太白金星", aka:"", identity:"天庭使者/外交官", cat:"immortal", sub:"天庭", imp:"support", img:"char_imgs/taibaijinxing.webp"},
+  {name:"托塔李天王", aka:"", identity:"天庭元帅", cat:"immortal", sub:"天庭", imp:"support", img:"char_imgs/lijing.webp"},
+  {name:"哪吒三太子", aka:"", identity:"天庭战将", cat:"immortal", sub:"天庭", imp:"support", img:"char_imgs/nezha.webp"},
+  {name:"二郎神", aka:"杨戬", identity:"显圣二郎真君", cat:"immortal", sub:"天庭", imp:"support", img:"char_imgs/erlangshen.webp"},
+  {name:"四大天王", aka:"", identity:"天庭守门神", cat:"immortal", sub:"天庭", imp:"minor", img:"char_imgs/sidatianwang.webp"},
+  {name:"巨灵神", aka:"", identity:"天庭先锋官", cat:"immortal", sub:"天庭", imp:"minor", img:"char_imgs/julingshen.webp"},
+  {name:"千里眼", aka:"", identity:"天庭侦察", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/qianliyan.webp"},
+  {name:"顺风耳", aka:"", identity:"天庭侦察", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/shunfenger.webp"},
+  {name:"雷公电母", aka:"", identity:"气象神", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/leigongdianmu.webp"},
+  {name:"风伯雨师", aka:"", identity:"气象神", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/fengboyushi.webp"},
+  {name:"武曲星君", aka:"", identity:"天庭星官", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/wuquxingjun.webp"},
+  {name:"赤脚大仙", aka:"", identity:"散仙", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/chijiaodaxian.webp"},
+  {name:"嫦娥", aka:"", identity:"月宫仙子", cat:"immortal", sub:"天庭", imp:"minor", img:"char_imgs/change.webp"},
+  {name:"卷帘大将", aka:"沙僧前身", identity:"天庭护卫", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/juanliandajiang.webp"},
+  {name:"天蓬元帅", aka:"八戒前身", identity:"天庭水军都督", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/tianpengyuanshuai.webp"},
+  {name:"昴日星官", aka:"大公鸡", identity:"二十八宿之一", cat:"immortal", sub:"天庭", imp:"minor", img:"char_imgs/maorixingguan.webp"},
+  {name:"二十八宿", aka:"", identity:"天庭星官群", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/ershibaxiu.webp"},
+  {name:"四值功曹", aka:"", identity:"天庭值日神", cat:"immortal", sub:"天庭", imp:"minor", img:"char_imgs/sizhigongcao.webp"},
+  {name:"五方揭谛", aka:"", identity:"天庭护法", cat:"immortal", sub:"天庭", imp:"minor", img:"char_imgs/wufangjiedi.webp"},
+  {name:"六丁六甲", aka:"", identity:"天庭护法", cat:"immortal", sub:"天庭", imp:"minor", img:"char_imgs/liudingliujia.webp"},
+  {name:"日游神/夜游神", aka:"", identity:"天庭巡察", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/riyouyeshen.webp"},
+  {name:"哮天犬", aka:"", identity:"二郎神神兽", cat:"immortal", sub:"天庭", imp:"minor", img:"char_imgs/xiaotianquan.webp"},
+  {name:"监丞/监副", aka:"弼马温同僚", identity:"御马监官吏", cat:"immortal", sub:"天庭", imp:"extra", img:"char_imgs/jianchengjianfu.webp"},
+
+  {name:"菩提祖师", aka:"须菩提", identity:"孙悟空师父，方寸山斜月三星洞", cat:"immortal", sub:"散仙地仙", imp:"support", img:"char_imgs/putizushi.webp"},
+  {name:"镇元大仙", aka:"与世同君", identity:"地仙之祖，万寿山五庄观", cat:"immortal", sub:"散仙地仙", imp:"support", img:"char_imgs/zhenyuandaxian.webp"},
+  {name:"黎山老母", aka:"", identity:"上古女仙", cat:"immortal", sub:"散仙地仙", imp:"minor", img:"char_imgs/lishanlaomu.webp"},
+  {name:"真真/爱爱/怜怜", aka:"四圣试禅心", identity:"黎山老母+文殊+普贤+观音化身", cat:"immortal", sub:"散仙地仙", imp:"minor", img:"char_imgs/zhenaiilian.webp"},
+  {name:"福禄寿三星", aka:"", identity:"福禄寿三星", cat:"immortal", sub:"散仙地仙", imp:"minor", img:"char_imgs/fulushou.webp"},
+  {name:"东华帝君", aka:"", identity:"方丈仙山", cat:"immortal", sub:"散仙地仙", imp:"extra", img:"char_imgs/donghuadijun.webp"},
+  {name:"瀛洲九老", aka:"", identity:"散仙", cat:"immortal", sub:"散仙地仙", imp:"extra", img:"char_imgs/yingzhoujiulao.webp"},
+  {name:"斜月三星洞众师兄", aka:"", identity:"菩提祖师门下弟子", cat:"immortal", sub:"散仙地仙", imp:"extra", img:"char_imgs/xieyuesanxingdongzhongshixiong.webp"},
+
+  {name:"东海龙王", aka:"敖广", identity:"四海龙王之首", cat:"immortal", sub:"龙族", imp:"support", img:"char_imgs/donghailongwang.webp"},
+  {name:"南海龙王", aka:"", identity:"四海龙王之一", cat:"immortal", sub:"龙族", imp:"minor", img:"char_imgs/nanhailongwang.webp"},
+  {name:"西海龙王", aka:"敖闰", identity:"四海龙王之一，白龙马之父", cat:"immortal", sub:"龙族", imp:"minor", img:"char_imgs/xihailongwang.webp"},
+  {name:"北海龙王", aka:"", identity:"四海龙王之一", cat:"immortal", sub:"龙族", imp:"minor", img:"char_imgs/beihailongwang.webp"},
+  {name:"泾河龙王", aka:"", identity:"犯天条被斩", cat:"immortal", sub:"龙族", imp:"minor", img:"char_imgs/jinghelongwang.webp"},
+  {name:"万圣龙王", aka:"", identity:"碧波潭龙王", cat:"immortal", sub:"龙族", imp:"minor", img:"char_imgs/wanshenglongwang.webp"},
+  {name:"龙婆/龙女", aka:"", identity:"万圣龙王家属", cat:"immortal", sub:"龙族", imp:"extra", img:"char_imgs/longpolongnu.webp"},
+
+  {name:"十殿阎王", aka:"秦广王等", identity:"地府主宰", cat:"immortal", sub:"幽冥地府", imp:"minor", img:"char_imgs/shidianyanwang.webp"},
+  {name:"判官", aka:"崔珏", identity:"地府判官", cat:"immortal", sub:"幽冥地府", imp:"minor", img:"char_imgs/panguan.webp"},
+  {name:"牛头马面", aka:"", identity:"勾魂使者", cat:"immortal", sub:"幽冥地府", imp:"extra", img:"char_imgs/niutoumamian.webp"},
+  {name:"黑白无常", aka:"", identity:"勾魂使者", cat:"immortal", sub:"幽冥地府", imp:"extra", img:"char_imgs/heibaiwuchang.webp"},
+  {name:"鬼卒", aka:"", identity:"地府差役", cat:"immortal", sub:"幽冥地府", imp:"extra", img:"char_imgs/guizu.webp"},
+
+  {name:"混世魔王", aka:"", identity:"妖王，霸占花果山", cat:"demon", sub:"闹天宫前", ep:"第1集", imp:"minor", img:"char_imgs/hunshimowang.webp"},
+  {name:"独角鬼王", aka:"", identity:"投奔美猴王", cat:"demon", sub:"闹天宫前", ep:"第1集", imp:"extra", img:"char_imgs/dujiaoguiwang.webp"},
+  {name:"花果山七十二洞妖王", aka:"", identity:"各路小妖王", cat:"demon", sub:"闹天宫前", ep:"第1集", imp:"extra", img:"char_imgs/huaguoshanqishierdongyaowang.webp"},
+  {name:"黑熊精", aka:"", identity:"熊怪", cat:"demon", sub:"黑风山-黄风岭", ep:"第6集", imp:"minor", img:"char_imgs/heixiongjing.webp"},
+  {name:"白衣秀士", aka:"白花蛇精", identity:"蛇精，黑熊精朋友", cat:"demon", sub:"黑风山-黄风岭", ep:"第6集", imp:"extra", img:"char_imgs/baiyixiushi.webp"},
+  {name:"凌虚子", aka:"苍狼精", identity:"狼精，黑熊精朋友", cat:"demon", sub:"黑风山-黄风岭", ep:"第6集", imp:"extra", img:"char_imgs/lingxuzi.webp"},
+  {name:"黄风怪", aka:"黄毛貂鼠精", identity:"灵山下凡的鼠精", cat:"demon", sub:"黑风山-黄风岭", ep:"第8集", imp:"minor", img:"char_imgs/huangfengguai.webp"},
+  {name:"虎先锋", aka:"", identity:"黄风怪部下", cat:"demon", sub:"黑风山-黄风岭", ep:"第8集", imp:"extra", img:"char_imgs/huxianfeng.webp"},
+  {name:"白骨精", aka:"白骨夫人", identity:"白骨成精", cat:"demon", sub:"白骨精-碗子山", ep:"第10集", imp:"support", img:"char_imgs/baigujing.webp"},
+  {name:"黄袍怪", aka:"奎木狼", identity:"二十八宿下凡", cat:"demon", sub:"白骨精-碗子山", ep:"第11集", imp:"support", img:"char_imgs/huangpaoguai.webp"},
+  {name:"百花羞公主", aka:"宝象国公主", identity:"被黄袍怪掳走", cat:"demon", sub:"白骨精-碗子山", ep:"第11集", imp:"minor", img:"char_imgs/baihuaxiu.webp"},
+  {name:"金角大王", aka:"", identity:"太上老君看金炉童子", cat:"demon", sub:"平顶山莲花洞", ep:"第12集", imp:"support", img:"char_imgs/jinjiaodawang.webp"},
+  {name:"银角大王", aka:"", identity:"太上老君看银炉童子", cat:"demon", sub:"平顶山莲花洞", ep:"第12集", imp:"support", img:"char_imgs/yinjiaodawang.webp"},
+  {name:"精细鬼/伶俐虫", aka:"", identity:"莲花洞小妖", cat:"demon", sub:"平顶山莲花洞", ep:"第12集", imp:"minor", img:"char_imgs/jingxilingli.webp"},
+  {name:"巴山虎/倚海龙", aka:"", identity:"莲花洞小妖", cat:"demon", sub:"平顶山莲花洞", ep:"第12集", imp:"extra", img:"char_imgs/bashanhuyihailong.webp"},
+  {name:"九尾狐", aka:"压龙山老奶奶", identity:"金角银角干娘", cat:"demon", sub:"平顶山莲花洞", ep:"第12集", imp:"minor", img:"char_imgs/jiuweihu.webp"},
+  {name:"狐阿七大王", aka:"", identity:"九尾狐之弟", cat:"demon", sub:"平顶山莲花洞", ep:"第12集", imp:"extra", img:"char_imgs/huaqi.webp"},
+  {name:"狮猁怪", aka:"青毛狮子", identity:"文殊菩萨坐骑", cat:"demon", sub:"乌鸡国", ep:"第13集", imp:"minor", img:"char_imgs/shiyiguai.webp"},
+  {name:"红孩儿", aka:"圣婴大王", identity:"牛魔王与铁扇公主之子", cat:"demon", sub:"火云洞-黑水河", ep:"第14集", imp:"support", img:"char_imgs/honghaier.webp"},
+  {name:"鼍龙", aka:"小鼍龙", identity:"泾河龙王之子", cat:"demon", sub:"火云洞-黑水河", ep:"第15集", imp:"minor", img:"char_imgs/tuolong.webp"},
+  {name:"虎力大仙", aka:"", identity:"黄毛虎成精", cat:"demon", sub:"车迟国", ep:"第15集", imp:"support", img:"char_imgs/hulidaxian.webp"},
+  {name:"鹿力大仙", aka:"", identity:"白毛鹿成精", cat:"demon", sub:"车迟国", ep:"第15集", imp:"support", img:"char_imgs/lulidaxian.webp"},
+  {name:"羊力大仙", aka:"", identity:"羚羊成精", cat:"demon", sub:"车迟国", ep:"第15集", imp:"support", img:"char_imgs/yanglidaxian.webp"},
+  {name:"灵感大王", aka:"金鱼精", identity:"观音莲花池金鱼", cat:"demon", sub:"通天河", ep:"第16集", imp:"support", img:"char_imgs/linggandawang.webp"},
+  {name:"老鼋", aka:"", identity:"通天河千年老龟", cat:"demon", sub:"通天河", ep:"第16集", imp:"minor", img:"char_imgs/laoyuan.webp"},
+  {name:"独角兕大王", aka:"青牛精", identity:"太上老君坐骑青牛", cat:"demon", sub:"金兜洞", ep:"第17集", imp:"support", img:"char_imgs/qingniujing.webp"},
+  {name:"蝎子精", aka:"琵琶精", identity:"蝎子成精", cat:"demon", sub:"女儿国-琵琶洞", ep:"第17-18集", imp:"support", img:"char_imgs/xiezejing.webp"},
+  {name:"如意真仙", aka:"", identity:"牛魔王之弟，解阳山破儿洞", cat:"demon", sub:"女儿国-琵琶洞", ep:"第17集", imp:"minor", img:"char_imgs/ruyizhenxian.webp"},
+  {name:"六耳猕猴", aka:"", identity:"混世四猴之一，假悟空", cat:"demon", sub:"真假美猴王", ep:"第19集", imp:"support", img:"char_imgs/liuermihou.webp"},
+  {name:"牛魔王", aka:"平天大圣", identity:"七大圣之首", cat:"demon", sub:"火焰山", ep:"第20集", imp:"support", img:"char_imgs/niumowang.webp"},
+  {name:"铁扇公主", aka:"罗刹女", identity:"牛魔王之妻，红孩儿之母", cat:"demon", sub:"火焰山", ep:"第20集", imp:"support", img:"char_imgs/tieshangongzhu.webp"},
+  {name:"玉面狐狸", aka:"", identity:"牛魔王之妾，万岁狐王之女", cat:"demon", sub:"火焰山", ep:"第20集", imp:"minor", img:"char_imgs/yumianhuli.webp"},
+  {name:"九头虫", aka:"九头驸马", identity:"九头鸟成精", cat:"demon", sub:"祭赛国碧波潭", ep:"第21集", imp:"minor", img:"char_imgs/jiutouchong.webp"},
+  {name:"奔波儿灞", aka:"鲇鱼怪", identity:"碧波潭小妖", cat:"demon", sub:"祭赛国碧波潭", ep:"第21集", imp:"minor", img:"char_imgs/benbobabo.webp"},
+  {name:"灞波儿奔", aka:"黑鱼精", identity:"碧波潭小妖", cat:"demon", sub:"祭赛国碧波潭", ep:"第21集", imp:"minor", img:"char_imgs/benbobabo.webp"},
+  {name:"十八公", aka:"松树精", identity:"荆棘岭树精", cat:"demon", sub:"荆棘岭-小西天", ep:"第22集", imp:"minor", img:"char_imgs/shibagong.webp"},
+  {name:"孤直公", aka:"柏树精", identity:"荆棘岭树精", cat:"demon", sub:"荆棘岭-小西天", ep:"第22集", imp:"minor", img:"char_imgs/guzhigong.webp"},
+  {name:"凌空子", aka:"桧树精", identity:"荆棘岭树精", cat:"demon", sub:"荆棘岭-小西天", ep:"第22集", imp:"minor", img:"char_imgs/lingkongzi.webp"},
+  {name:"拂云叟", aka:"竹子精", identity:"荆棘岭树精", cat:"demon", sub:"荆棘岭-小西天", ep:"第22集", imp:"minor", img:"char_imgs/fuyunsou.webp"},
+  {name:"杏仙", aka:"", identity:"杏树精", cat:"demon", sub:"荆棘岭-小西天", ep:"第22集", imp:"minor", img:"char_imgs/xingxian.webp"},
+  {name:"黄眉怪", aka:"黄眉老佛", identity:"弥勒佛座下黄眉童子", cat:"demon", sub:"荆棘岭-小西天", ep:"第22-23集", imp:"support", img:"char_imgs/huangmeiguai.webp"},
+  {name:"赛太岁", aka:"金毛犼", identity:"观音坐骑", cat:"demon", sub:"朱紫国-盘丝洞", ep:"第23集", imp:"minor", img:"char_imgs/saitaisui.webp"},
+  {name:"有来有去", aka:"", identity:"赛太岁部下小妖", cat:"demon", sub:"朱紫国-盘丝洞", ep:"第23集", imp:"extra", img:"char_imgs/youlaiyouqu.webp"},
+  {name:"蜘蛛精七姐妹", aka:"", identity:"七个蜘蛛成精", cat:"demon", sub:"朱紫国-盘丝洞", ep:"第24集", imp:"support", img:"char_imgs/zhizhujing.webp"},
+  {name:"蜈蚣精", aka:"百眼魔君/多目怪", identity:"蜘蛛精师兄", cat:"demon", sub:"朱紫国-盘丝洞", ep:"第24集", imp:"minor", img:"char_imgs/wugongjing.webp"},
+  {name:"蜜蚂蠦班蜢蜡七虫", aka:"", identity:"多目怪的小虫兵", cat:"demon", sub:"朱紫国-盘丝洞", ep:"第24集", imp:"extra", img:"char_imgs/mimabanmenglaqichong.webp"},
+  {name:"青毛狮子怪", aka:"青狮", identity:"文殊菩萨坐骑 [续集]", cat:"demon", sub:"狮驼岭", ep:"续集", imp:"support", img:"char_imgs/qingshijing.webp"},
+  {name:"黄牙老象", aka:"白象", identity:"普贤菩萨坐骑 [续集]", cat:"demon", sub:"狮驼岭", ep:"续集", imp:"support", img:"char_imgs/baiqiang.webp"},
+  {name:"大鹏金翅雕", aka:"", identity:"如来佛舅舅 [续集]", cat:"demon", sub:"狮驼岭", ep:"续集", imp:"support", img:"char_imgs/dapeng.webp"},
+  {name:"小钻风", aka:"", identity:"狮驼岭巡山小妖 [续集]", cat:"demon", sub:"狮驼岭", ep:"续集", imp:"minor", img:"char_imgs/xiaozuanfeng.webp"},
+  {name:"白鹿精", aka:"国丈", identity:"南极寿星坐骑 [续集]", cat:"demon", sub:"比丘国", ep:"续集", imp:"minor", img:"char_imgs/bailujing.webp"},
+  {name:"白面狐狸", aka:"美后", identity:"狐狸精 [续集]", cat:"demon", sub:"比丘国", ep:"续集", imp:"minor", img:"char_imgs/baimianhuli.webp"},
+  {name:"金鼻白毛老鼠精", aka:"地涌夫人", identity:"托塔李天王义女 [续集]", cat:"demon", sub:"无底洞", ep:"续集", imp:"minor", img:"char_imgs/baishujing.webp"},
+  {name:"玉兔精", aka:"假公主", identity:"月宫玉兔下凡 [续集]", cat:"demon", sub:"天竺国", ep:"续集", imp:"support", img:"char_imgs/yutujing.webp"},
+  {name:"犀牛精三兄弟", aka:"避寒/避暑/避尘大王", identity:"三只犀牛成精 [续集]", cat:"demon", sub:"天竺国", ep:"续集", imp:"minor", img:"char_imgs/xiniujing.webp"},
+  {name:"通臂猿猴/赤尻马猴", aka:"", identity:"花果山四健将", cat:"demon", sub:"花果山旧部", imp:"extra", img:"char_imgs/tongbiyuanhou.webp"},
+  {name:"崩将军/芭将军", aka:"", identity:"花果山猴将", cat:"demon", sub:"花果山旧部", imp:"extra", img:"char_imgs/bengjiangjunbajiangjun.webp"},
+
+  {name:"唐太宗", aka:"李世民", identity:"大唐皇帝", cat:"mortal", sub:"大唐朝廷", ep:"第1-3集", imp:"support", img:"char_imgs/tangtaizong.webp"},
+  {name:"魏征", aka:"", identity:"丞相，梦中斩龙王", cat:"mortal", sub:"大唐朝廷", ep:"第2集", imp:"minor", img:"char_imgs/weizheng.webp"},
+  {name:"尉迟恭", aka:"尉迟公", identity:"门神，武将", cat:"mortal", sub:"大唐朝廷", ep:"第2集", imp:"minor", img:"char_imgs/menshen.webp"},
+  {name:"秦琼", aka:"秦叔宝", identity:"门神，武将", cat:"mortal", sub:"大唐朝廷", ep:"第2集", imp:"minor", img:"char_imgs/menshen.webp"},
+  {name:"徐茂公", aka:"", identity:"军师", cat:"mortal", sub:"大唐朝廷", imp:"extra", img:"char_imgs/xumaogong.webp"},
+  {name:"房玄龄/杜如晦", aka:"", identity:"宰相", cat:"mortal", sub:"大唐朝廷", imp:"extra", img:"char_imgs/fangxuanlingdurui.webp"},
+  {name:"萧瑀/殷开山等", aka:"", identity:"朝臣", cat:"mortal", sub:"大唐朝廷", imp:"extra", img:"char_imgs/xiaoyuyinkaishan.webp"},
+  {name:"刘全/李翠莲", aka:"", identity:"进瓜夫妻", cat:"mortal", sub:"大唐朝廷", ep:"第2集", imp:"extra", img:"char_imgs/liuquancuilian.webp"},
+  {name:"相良", aka:"", identity:"卖水还钱的善人", cat:"mortal", sub:"大唐朝廷", ep:"第2集", imp:"extra", img:"char_imgs/xiangliang.webp"},
+  {name:"陈光蕊", aka:"陈萼", identity:"唐僧之父，状元", cat:"mortal", sub:"唐僧身世", ep:"第1集", imp:"minor", img:"char_imgs/chenguangrui.webp"},
+  {name:"殷温娇", aka:"满堂娇", identity:"唐僧之母", cat:"mortal", sub:"唐僧身世", ep:"第1集", imp:"minor", img:"char_imgs/yinwenjiao.webp"},
+  {name:"刘洪", aka:"船夫", identity:"杀害陈光蕊的恶人", cat:"mortal", sub:"唐僧身世", ep:"第1集", imp:"minor", img:"char_imgs/liuhong.webp"},
+  {name:"法明长老", aka:"迁安和尚", identity:"金山寺方丈，救养唐僧", cat:"mortal", sub:"唐僧身世", ep:"第1集", imp:"minor", img:"char_imgs/famingzhanglao.webp"},
+  {name:"殷开山", aka:"", identity:"唐僧外祖父", cat:"mortal", sub:"唐僧身世", ep:"第1集", imp:"extra", img:"char_imgs/yinkaishan.webp"},
+  {name:"刘伯钦", aka:"镇山太保", identity:"猎户，唐僧出长安后第一引路人", cat:"mortal", sub:"五行山", imp:"minor", img:"char_imgs/liuboqin.webp"},
+  {name:"陈姓老丈", aka:"", identity:"五行山下村庄老人", cat:"mortal", sub:"五行山", imp:"extra", img:"char_imgs/chenlaozhang.webp"},
+  {name:"高太公", aka:"高老", identity:"高翠兰之父", cat:"mortal", sub:"高老庄", imp:"support", img:"char_imgs/gaotaigong.webp"},
+  {name:"高翠兰", aka:"", identity:"猪八戒强娶之女", cat:"mortal", sub:"高老庄", imp:"support", img:"char_imgs/gaocuilan.webp"},
+  {name:"高才", aka:"", identity:"高家下人", cat:"mortal", sub:"高老庄", imp:"minor", img:"char_imgs/gaocai.webp"},
+  {name:"宝象国国王", aka:"", identity:"百花羞之父", cat:"mortal", sub:"各路国王", ep:"第11集", imp:"minor", img:"char_imgs/baoxiangguowang.webp"},
+  {name:"乌鸡国国王", aka:"真国王", identity:"被狮猁怪推入井中", cat:"mortal", sub:"各路国王", ep:"第13集", imp:"minor", img:"char_imgs/wujiguoguowang.webp"},
+  {name:"乌鸡国假国王", aka:"狮猁怪", identity:"妖怪假冒", cat:"mortal", sub:"各路国王", ep:"第13集", imp:"minor", img:"char_imgs/wujiguojia.webp"},
+  {name:"车迟国国王", aka:"", identity:"崇道灭僧", cat:"mortal", sub:"各路国王", ep:"第15集", imp:"minor", img:"char_imgs/chechiguowang.webp"},
+  {name:"西梁女国国王", aka:"", identity:"女儿国国王，钟情唐僧", cat:"mortal", sub:"各路国王", ep:"第17-18集", imp:"support", img:"char_imgs/nverguoguowang.webp"},
+  {name:"祭赛国国王", aka:"", identity:"金光寺失宝", cat:"mortal", sub:"各路国王", ep:"第21集", imp:"minor", img:"char_imgs/jisaiguowang.webp"},
+  {name:"朱紫国国王", aka:"", identity:"被赛太岁抢走金圣宫娘娘", cat:"mortal", sub:"各路国王", ep:"第23集", imp:"minor", img:"char_imgs/zhuziguowang.webp"},
+  {name:"比丘国国王", aka:"", identity:"宠信白鹿精 [续集]", cat:"mortal", sub:"各路国王", ep:"续集", imp:"minor", img:"char_imgs/biqiuguowang.webp"},
+  {name:"灭法国国王", aka:"", identity:"要杀一万个和尚 [续集]", cat:"mortal", sub:"各路国王", ep:"续集", imp:"minor", img:"char_imgs/miefaguowang.webp"},
+  {name:"天竺国国王", aka:"", identity:"玉兔精假冒其公主 [续集]", cat:"mortal", sub:"各路国王", ep:"续集", imp:"minor", img:"char_imgs/tianzhuguowang.webp"},
+  {name:"铜台府刺史", aka:"", identity:"寇员外案 [续集]", cat:"mortal", sub:"各路国王", ep:"续集", imp:"extra", img:"char_imgs/tongtaicishi.webp"},
+  {name:"百花羞公主", aka:"", identity:"宝象国公主，被黄袍怪掳", cat:"mortal", sub:"后妃公主", imp:"minor", img:"char_imgs/baihuaxiu.webp"},
+  {name:"乌鸡国王后", aka:"", identity:"真国王之妻", cat:"mortal", sub:"后妃公主", imp:"extra", img:"char_imgs/wujiguowanghou.webp"},
+  {name:"乌鸡国太子", aka:"", identity:"真国王之子", cat:"mortal", sub:"后妃公主", imp:"minor", img:"char_imgs/wujiguotaizi.webp"},
+  {name:"西梁女国太师", aka:"", identity:"女儿国宰相", cat:"mortal", sub:"后妃公主", imp:"minor", img:"char_imgs/xiliangnvguotaishi.webp"},
+  {name:"金圣宫娘娘", aka:"", identity:"朱紫国王后，被赛太岁掳", cat:"mortal", sub:"后妃公主", imp:"minor", img:"char_imgs/jinshenggongniangniang.webp"},
+  {name:"天竺国真公主", aka:"", identity:"被玉兔精顶替 [续集]", cat:"mortal", sub:"后妃公主", imp:"minor", img:"char_imgs/tianzhuzhengongzhu.webp"},
+  {name:"金池长老", aka:"", identity:"观音禅院老方丈，贪唐僧袈裟", cat:"mortal", sub:"民间百姓", imp:"minor", img:"char_imgs/jinchizhanglao.webp"},
+  {name:"广智/广谋", aka:"", identity:"观音禅院小和尚", cat:"mortal", sub:"民间百姓", imp:"extra", img:"char_imgs/guangzhiguangmou.webp"},
+  {name:"陈澄/陈清", aka:"", identity:"通天河陈家庄员外", cat:"mortal", sub:"民间百姓", imp:"minor", img:"char_imgs/chenchengchenqing.webp"},
+  {name:"一秤金/陈关保", aka:"", identity:"陈家庄童男童女", cat:"mortal", sub:"民间百姓", imp:"minor", img:"char_imgs/yichengjinchengguanbao.webp"},
+  {name:"寇洪", aka:"寇员外", identity:"铜台府大善人，斋僧万名 [续集]", cat:"mortal", sub:"民间百姓", imp:"minor", img:"char_imgs/kouhong.webp"},
+  {name:"寇夫人/寇梁/寇栋", aka:"", identity:"寇员外家人 [续集]", cat:"mortal", sub:"民间百姓", imp:"extra", img:"char_imgs/koufurenkouliangkoudong.webp"},
+  {name:"赵寡妇", aka:"", identity:"灭法国客栈老板娘 [续集]", cat:"mortal", sub:"民间百姓", imp:"extra", img:"char_imgs/zhaoguafu.webp"},
+  {name:"李老汉", aka:"", identity:"驼罗庄村庄", cat:"mortal", sub:"民间百姓", imp:"extra", img:"char_imgs/lilaohan.webp"},
+  {name:"凤仙郡郡侯", aka:"", identity:"得罪玉帝，大旱三年", cat:"mortal", sub:"民间百姓", imp:"minor", img:"char_imgs/fengxianjun.webp"},
+  {name:"布金禅寺老院主", aka:"", identity:"收留天竺国真公主 [续集]", cat:"mortal", sub:"民间百姓", imp:"extra", img:"char_imgs/bujinchansiyuanzhu.webp"},
+  {name:"樵夫", aka:"灵山指路人", identity:"凌云渡前指路", cat:"mortal", sub:"民间百姓", imp:"extra", img:"char_imgs/qiaofu.webp"},
+  {name:"法门寺众僧", aka:"", identity:"唐僧出长安第一站", cat:"mortal", sub:"民间百姓", imp:"extra", img:"char_imgs/famensizhongseng.webp"},
+  {name:"化生寺僧人", aka:"", identity:"长安", cat:"mortal", sub:"民间百姓", imp:"extra", img:"char_imgs/huashengsi.webp"},
+  {name:"洪福寺僧人", aka:"", identity:"长安", cat:"mortal", sub:"民间百姓", imp:"extra", img:"char_imgs/hongfusi.webp"},
+
+  {name:"金箍棒", aka:"如意金箍棒", identity:"定海神珍铁，孙悟空兵器", cat:"item", sub:"兵器法宝", imp:"support", img:"char_imgs/jingubang.webp"},
+  {name:"九齿钉耙", aka:"", identity:"太上老君所铸神兵，猪八戒兵器", cat:"item", sub:"兵器法宝", imp:"minor", img:"char_imgs/jiuchidingpa.webp"},
+  {name:"降妖宝杖", aka:"", identity:"沙僧兵器", cat:"item", sub:"兵器法宝", imp:"minor", img:"char_imgs/xiangyaobaozhang.webp"},
+  {name:"芭蕉扇", aka:"", identity:"太上老君/铁扇公主持有", cat:"item", sub:"法宝", imp:"support", img:"char_imgs/bajiaoshan.webp"},
+  {name:"紫金红葫芦", aka:"", identity:"太上老君法宝，叫名即收", cat:"item", sub:"法宝", imp:"minor", img:"char_imgs/zijinhonghulu.webp"},
+  {name:"羊脂玉净瓶", aka:"", identity:"观音法宝", cat:"item", sub:"法宝", imp:"minor", img:"char_imgs/yangzhiyujingping.webp"},
+  {name:"金刚琢", aka:"", identity:"太上老君法宝，能收万物", cat:"item", sub:"法宝", imp:"minor", img:"char_imgs/jingangzhuo.webp"},
+  {name:"人种袋", aka:"后天袋", identity:"弥勒佛法宝", cat:"item", sub:"法宝", imp:"minor", img:"char_imgs/renzhongdai.webp"},
+  {name:"紫金铃", aka:"", identity:"赛太岁法宝", cat:"item", sub:"法宝", imp:"minor", img:"char_imgs/zijinling.webp"},
+  {name:"照妖镜", aka:"", identity:"天庭法宝", cat:"item", sub:"法宝", imp:"extra", img:"char_imgs/zhaoyaojing.webp"},
+  {name:"生死簿", aka:"", identity:"地府", cat:"item", sub:"法宝", imp:"minor", img:"char_imgs/shengsibu.webp"},
+  {name:"锦斓袈裟", aka:"", identity:"观音所赐，唐僧袈裟", cat:"item", sub:"法宝", imp:"support", img:"char_imgs/jinlanjiasha.webp"},
+  {name:"九环锡杖", aka:"", identity:"观音所赐，唐僧法器", cat:"item", sub:"法宝", imp:"support", img:"char_imgs/jiuhuanxizhang.webp"},
+  {name:"紧箍咒/金箍", aka:"", identity:"观音所赐，约束孙悟空", cat:"item", sub:"法宝", imp:"support", img:"char_imgs/jinguzhou.webp"},
+  {name:"石猴出世仙石", aka:"", identity:"花果山灵石，孙悟空之源", cat:"item", sub:"特殊", imp:"extra", img:"char_imgs/shihouchushixianshi.webp"},
+];
+
+const categories = [
+  {id:"all", label:"全部角色"},
+  {id:"team", label:"取经团队"},
+  {id:"immortal", label:"神仙体系"},
+  {id:"demon", label:"妖怪精怪"},
+  {id:"mortal", label:"凡人体系"},
+  {id:"item", label:"法宝/其他"},
+];
+const impLabels = {main:"主角", support:"重要配角", minor:"次要角色", extra:"龙套"};
+const impClasses = {main:"main", support:"support", minor:"minor", extra:"extra"};
+const impTags = {main:"tag-main", support:"tag-support", minor:"tag-minor", extra:"tag-extra"};
+const catColors = {
+  team:{icon:"🏆"}, immortal:{icon:"☁️"}, demon:{icon:"👹"}, mortal:{icon:"👤"}, item:{icon:"💎"},
+};
+
+let activeCat = "all", activeImp = "all";
+
+function getFirstChar(name) {
+  const c = name.charAt(0);
+  // Extract meaningful char from multi-char entries
+  if (c === "真" || c === "精" || c === "蜜" || c === "崩" || c === "萧" || c === "房" || c === "陈" || c === "寇" || c === "一" || c === "广" || c === "监" || c === "龙" || c === "化" || c === "洪" || c === "刘" || c === "相" || c === "徐" || c === "法" || c === "斜") return name.slice(0,1);
+  return c;
+}
+
+// ===== INIT =====
+function init() {
+  const counts = {team:0, immortal:0, demon:0, mortal:0, item:0};
+  let total = 0;
+  characters.forEach(c => { counts[c.cat]++; total++; });
+  document.getElementById("stats").innerHTML = `
+    <div class="stat-card team"><div class="num">${counts.team}</div><div class="label">🏆 取经团队</div></div>
+    <div class="stat-card immortal"><div class="num">${counts.immortal}</div><div class="label">☁️ 神仙体系</div></div>
+    <div class="stat-card demon"><div class="num">${counts.demon}</div><div class="label">👹 妖怪精怪</div></div>
+    <div class="stat-card mortal"><div class="num">${counts.mortal}</div><div class="label">👤 凡人体系</div></div>
+    <div class="stat-card item"><div class="num">${counts.item}</div><div class="label">💎 法宝/其他</div></div>`;
+  document.getElementById("totalCount").textContent = total;
+  document.getElementById("tabs").innerHTML = categories.map(c => {
+    const cnt = c.id === "all" ? total : (counts[c.id] || 0);
+    return `<button class="tab${c.id===activeCat?' active':''}" data-cat="${c.id}">${c.label}<span class="count">(${cnt})</span></button>`;
+  }).join("");
+
+  document.querySelectorAll("#importanceFilter .filter-btn").forEach(btn => {
+    btn.addEventListener("click", function() {
+      document.querySelectorAll("#importanceFilter .filter-btn").forEach(b => b.classList.remove("active"));
+      this.classList.add("active"); activeImp = this.dataset.filter; renderAll();
+    });
+  });
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", function() {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      this.classList.add("active"); activeCat = this.dataset.cat; renderAll();
+    });
+  });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") closeModalDirect(); });
+  renderAll();
+}
+
+// ===== MODAL =====
+function openModal(c) {
+  const hero = document.getElementById("modalHero");
+  const body = document.getElementById("modalBody");
+  hero.className = "modal-hero " + c.cat;
+  if (c.img) {
+    hero.innerHTML = `<img src="${c.img}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;">`;
+  } else {
+    hero.innerHTML = `<span class="avatar-text">${getFirstChar(c.name)}</span>`;
+  }
+  body.innerHTML = `
+    <h2>${c.name} <span class="tag ${impTags[c.imp]}">${impLabels[c.imp]}</span></h2>
+    ${c.aka ? `<div class="aka">${c.aka}</div>` : ""}
+    <div class="detail-row">
+      <div class="detail-item"><div class="dlabel">身份</div><div class="dval">${c.identity}</div></div>
+      ${c.ep ? `<div class="detail-item"><div class="dlabel">出场</div><div class="dval">📺 ${c.ep}</div></div>` : ""}
+    </div>
+    <div class="detail-row">
+      <div class="detail-item"><div class="dlabel">体系</div><div class="dval">${({team:"取经团队",immortal:"神仙体系",demon:"妖怪精怪",mortal:"凡人体系",item:"法宝/其他"})[c.cat]}</div></div>
+      ${c.sub ? `<div class="detail-item"><div class="dlabel">子类</div><div class="dval">${c.sub}</div></div>` : ""}
+    </div>
+  `;
+  document.getElementById("modal").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+function closeModal(e) { if (e.target === document.getElementById("modal")) closeModalDirect(); }
+function closeModalDirect() {
+  document.getElementById("modal").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+// ===== RENDER =====
+function renderAll() {
+  const query = document.getElementById("search").value.trim().toLowerCase();
+  let filtered = characters;
+  if (activeCat !== "all") filtered = filtered.filter(c => c.cat === activeCat);
+  if (activeImp !== "all") filtered = filtered.filter(c => c.imp === activeImp);
+  if (query) {
+    filtered = filtered.filter(c =>
+      c.name.toLowerCase().includes(query) || (c.aka && c.aka.toLowerCase().includes(query)) ||
+      c.identity.toLowerCase().includes(query) || (c.sub && c.sub.toLowerCase().includes(query)));
+  }
+  document.getElementById("resultInfo").innerHTML = `找到 <strong>${filtered.length}</strong> 个角色`;
+
+  const catOrder = activeCat === "all" ? categories.filter(c => c.id !== "all") : categories.filter(c => c.id === activeCat);
+  let html = "";
+  catOrder.forEach(cat => {
+    const catChars = filtered.filter(c => c.cat === cat.id);
+    if (catChars.length === 0) return;
+    const subs = {};
+    catChars.forEach(c => { const key = c.sub || "其他"; if (!subs[key]) subs[key] = []; subs[key].push(c); });
+    html += `<div class="tab-content active"><div class="section-header"><div class="dot"></div>${catColors[cat.id].icon} ${cat.label}（${catChars.length}）</div>`;
+
+    Object.entries(subs).forEach(([subName, chars]) => {
+      if (Object.keys(subs).length > 1 && cat.id !== "team") {
+        html += `<div style="font-size:13px;color:var(--text-light);margin:8px 0 4px 4px;opacity:.7;">▸ ${subName}</div>`;
+      }
+      html += `<div class="cards">`;
+      chars.forEach((c, idx) => {
+        const impClass = impClasses[c.imp] || "minor";
+        const tagClass = impTags[c.imp] || "tag-minor";
+        const akaHtml = c.aka ? ` <span style="font-size:13px;color:var(--text-light);font-weight:400;">(${c.aka})</span>` : "";
+        const eptext = c.ep ? `<span>📺 ${c.ep}</span>` : "";
+        const imgHtml = c.img
+          ? `<img src="${c.img}" alt="${c.name}" loading="lazy">`
+          : getFirstChar(c.name);
+        html += `
+        <div class="card ${impClass}" onclick="openModal(characters[${characters.indexOf(c)}])">
+          <div class="avatar ${c.cat}">${imgHtml}</div>
+          <div class="info">
+            <div class="name">${c.name}${akaHtml}<span class="tag ${tagClass}">${impLabels[c.imp]}</span></div>
+            <div class="identity">${c.identity}</div>
+            ${eptext ? `<div class="meta">${eptext}</div>` : ""}
+          </div>
+        </div>`;
+      });
+      html += `</div>`;
+    });
+    html += `</div>`;
+  });
+  if (filtered.length === 0) {
+    html = `<div class="no-result"><div class="big">🔍</div><p>没有找到匹配的角色，试试换个关键词？</p></div>`;
+  }
+  document.getElementById("tabContents").innerHTML = html;
+}
+
+init();
+</script>
+</body>
+</html>
