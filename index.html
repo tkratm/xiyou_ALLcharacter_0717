@@ -581,7 +581,6 @@ function populateRankings() {
     {score:37,reason:"荆棘岭杏树精·才情俱佳",highlight:"树精拂云叟·对诗唐僧"},
     {score:36,reason:"猎户·镇山太保",highlight:"唐僧出长安第一引路人"},
     {score:35,reason:"丞相·梦中斩龙王",highlight:"泾河龙王·门神由来"},
-    {score:34,reason:"燃灯古佛·揭穿无字经书",highlight:"派白雄尊者追回经书"},
     {score:33,reason:"九头驸马·盗取舍利子",highlight:"碧波潭·二郎神助战"},
     {score:32,reason:"高翠兰之父·招八戒为婿",highlight:"高老庄·哭诉妖怪女婿"},
     {score:31,reason:"月宫仙子·天蓬旧事",highlight:"收玉兔·太阴星君"},
@@ -597,6 +596,7 @@ function populateRankings() {
     {score:21,reason:"门神·双锏大将",highlight:"秦琼尉迟恭·太宗守门"},
     {score:20,reason:"杀害陈光蕊的恶人",highlight:"唐僧杀父仇人·冒名顶替"},
     {score:19,reason:"金山寺方丈·救养唐僧",highlight:"江流儿·迁安和尚"},
+    {score:18,reason:"金山寺长老·抚养唐僧十八年",highlight:"法明长老·江流寺"},
   ];
   const names = [
     "孙悟空","猪八戒","西梁女国国王","观音菩萨","唐僧","白骨精","如来佛祖","红孩儿",
@@ -608,15 +608,16 @@ function populateRankings() {
     "百花羞公主","巨灵神","灵感大王","托塔李天王","老鼋",
     "唐太宗","金池长老","金圣宫娘娘","黄眉怪","独角兕大王",
     "虎力大仙","鹿力大仙","羊力大仙","陈光蕊","殷温娇",
-    "赛太岁","蜈蚣精","九灵元圣","玉面狐狸","奔波儿灞",
+    "赛太岁","蜈蚣精","玉面狐狸","奔波儿灞",
     "白鹿精","白面狐狸","小钻风","杏仙","刘伯钦",
-    "魏征","燃灯古佛","九头虫","高太公","嫦娥",
+    "魏征","九头虫","高太公","嫦娥",
     "东海龙王","昴日星官","文殊菩萨","四大天王","哮天犬",
     "金箍棒","芭蕉扇","锦斓袈裟","紧箍咒/金箍","尉迟恭",
     "秦琼","刘洪","法明长老",
   ];
   const ranked = [];
-  for (let i = 0; i < names.length; i++) {
+  const limit = Math.min(list.length, names.length);
+  for (let i = 0; i < limit; i++) {
     const c = map[names[i]];
     if (!c) continue;
     ranked.push({...c, pop:list[i].score, popReason:list[i].reason, popHighlight:list[i].highlight});
@@ -649,8 +650,9 @@ function init() {
     <div class="stat-card mortal" data-cat="mortal" title="点击查看凡人体系"><div class="num">${counts.mortal}</div><div class="label">👤 凡人体系</div></div>
     <div class="stat-card item" data-cat="item" title="点击查看法宝/其他"><div class="num">${counts.item}</div><div class="label">💎 法宝/其他</div></div>
     <div class="stat-card ep" data-cat="episodes" title="点击查看分集剧情"><div class="num">25</div><div class="label">🎬 分集剧情</div></div>
-    <div class="stat-card rank" data-cat="ranking" title="点击查看角色排行"><div class="num">80</div><div class="label">🏅 角色排行</div></div>`;
+    <div class="stat-card rank" data-cat="ranking" title="点击查看角色排行"><div class="num" id="rankCount">78</div><div class="label">🏅 角色排行</div></div>`;
   document.getElementById("totalCount").textContent = total;
+  document.getElementById("rankCount").textContent = rankedCharacters.length;
 
   document.querySelectorAll("#importanceFilter .filter-btn").forEach(btn => {
     btn.addEventListener("click", function() {
@@ -783,7 +785,7 @@ function renderAll() {
 
     const top10 = filtered.slice(0,10);
     const mid20 = filtered.slice(10,30);
-    const rest20 = filtered.slice(30,50);
+    const rest50 = filtered.slice(30,80);
 
     let html = '';
 
@@ -831,10 +833,10 @@ function renderAll() {
       html += '</div>';
     }
 
-    // Rest 31-50
-    if (rest20.length > 0) {
-      html += '<div class="rank-section-title">👍 经典 31-50</div><div class="rank-mid-list">';
-      rest20.forEach(c => {
+    // Rest 31-80
+    if (rest50.length > 0) {
+      html += '<div class="rank-section-title">👍 经典 31-80</div><div class="rank-mid-list">';
+      rest50.forEach(c => {
         const idx = rankedCharacters.indexOf(c) + 1;
         const imgHtml = c.img
           ? `<img src="${c.img}" alt="${c.name}" loading="lazy">`
